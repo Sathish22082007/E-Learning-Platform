@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Student</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 30px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>EDIT/UP[DATE Student Profile</h2>
+    <form   action="update_student/{{student.id}}"method="POST">
+        {% csrf_token %}
+        <label>First Name</label>
+        <input type="text" name="first_name" value={{student.first_name}} required>
+
+        <label>Last Name</label>
+        <input type="text" name="last_name" value={{student.last_name}} required>
+
+        <label>Username</label>
+        <input type="text" name="username" value={{student.username}} required>
+
+        <label>Email</label>
+        <input type="email" name="email" value={{student.email}} required>
+
+        <label>Contact</label>
+        <input type="text" name="contact" value={{student.contact}} required>
+
+        <label>Gender</label>
+        <input name="gender" type="text" value={{student.gender}}>
+          
+
+        <label>Date of Birth</label>
+<input type="date" name="dob" value="{{ student.dob|date:'Y-m-d' }}">
+
+
+        <label>Age</label>
+        <input type="number" name="age" value={{student.age}}>
+
+        <label>Qualification</label>
+        <input type="text" name="qualification" value={{student.qualification}}>
+
+        <button type="submit">UPDATE</button>
+    </form>
+</div>
+
+</body>
+</html>

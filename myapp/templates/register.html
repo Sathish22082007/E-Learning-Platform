@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .left {
+      width: 50%;
+      background-color: #ffeef0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .left img {
+      width: 100%;
+      height: auto;
+      max-height: 60vh;
+      object-fit: contain;
+      padding: 20px;
+    }
+
+    .left h2 {
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .left p {
+      text-align: center;
+      color: #555;
+      max-width: 300px;
+      font-size: 14px;
+    }
+
+    .right {
+      width: 50%;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .back-link {
+      color: #555;
+      font-size: 14px;
+      text-align: right;
+      margin-bottom: 20px;
+      text-decoration: none;
+      display: block;
+    }
+
+    h2.title {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .role-toggle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .role-toggle button {
+      flex: 1;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid #ff5c75;
+      background-color: white;
+      color: #ff5c75;
+    }
+
+    .role-toggle .active {
+      background-color: #ff5c75;
+      color: white;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+
+    button.submit-btn {
+      width: 100%;
+      background-color: #ff5c75;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .login-link {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .login-link a {
+      color: #ff5c75;
+      text-decoration: none;
+    }
+
+    .form-wrapper {
+      display: none;
+    }
+
+    .form-wrapper.active {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .left, .right {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+
+      .right {
+        overflow: visible;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Left Section -->
+    <div class="left">
+      <img src="/static/images/sign in.svg" alt="Welcome Image" />
+      <h2>Welcome to <br><span style="color: #ff4d6d;">eLearning</span> Courses.</h2>
+      <p>Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities.</p>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right">
+      <a href="/" class="back-link">Back to Home</a>
+      <h2 class="title">Sign up</h2>
+
+      <!-- Toggle Buttons -->
+      <div class="role-toggle">
+        <button id="tutorBtn" class="active">TUTOR INSTRUCTOR</button>
+        <button id="studentBtn">STUDENT</button>
+      </div>
+
+      <!-- Tutor Form -->
+     <div id="tutorForm" class="form-wrapper active">
+  <form action="/register" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="role" value="instructor" />
+    <div style="display: flex; gap: 15px;">
+      <div style="flex: 1;">
+        <label>First Name</label>
+        <input type="text" name="first_name" placeholder="First Name" required />
+      </div>
+      <div style="flex: 1;">
+        <label>Last Name</label>
+        <input type="text" name="last_name" placeholder="Last Name" required />
+      </div>
+    </div>
+
+    <label>Username</label>
+    <input type="text" name="username" placeholder="Username" required />
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Email" required />
+
+    <label>Contact Number</label>
+    <input type="text" name="contact" placeholder="Contact Number">
+
+    <label>Gender</label>
+    <select name="gender" style="padding: 10px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #ccc;">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Date of Birth</label>
+    <input type="date" name="dob" placeholder="Date of Birth" required />
+
+    <label>Qualification</label>
+    <input type="text" name="qualification" placeholder="e.g., M.Sc, Ph.D" required />
+
+    <label>Expertise</label>
+    <input type="text" name="expertise" placeholder="e.g., Data Science, Web Development" required />
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Password" required />
+
+    <label>Confirm Password</label>
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+
+    <button type="submit" class="submit-btn">Create Instructor Account</button>
+    <p class="login-link">Already have an account? <a href="/admin">Login</a></p>
+  </form>
+</div>
+     <!-- Student Form -->
+<div id="studentForm" class="form-wrapper">
+  <form method="POST" action="/register">
+    {% csrf_token %}
+    <input type="hidden" name="role" value="student" />
+
+    <div style="display: flex; gap: 15px;">
+      <div style="flex: 1;">
+        <label>First Name</label>
+        <input type="text" name="first_name" required placeholder="First Name" />
+      </div>
+      <div style="flex: 1;">
+        <label>Last Name</label>
+        <input type="text" name="last_name" placeholder="last Name" required />
+      </div>
+    </div>
+
+    <label>Email</label>
+    <input type="email" name="email" placeholder="Email" required />
+
+    <label>Gender</label>
+    <select name="gender" style="padding: 10px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #ccc;">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Date of Birth</label>
+    <input type="date" name="dob" placeholder="Date of Birth" required />
+
+    <label>Qualification</label>
+    <input type="text" name="qualification" placeholder="Qualification" required />
+
+    <label>Contact Number</label>
+    <input type="text" name="contact" placeholder="Contact Number" required />
+
+    <label>Course</label>
+    <input type="text" name="course" placeholder="Course" required />
+
+    <label>Username</label>
+    <input type="text" name="username" placeholder="Username" required />
+
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Password" required />
+
+    <label>Confirm Password</label>
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+
+    <button type="submit" class="submit-btn">Create Student Account</button>
+    <p class="login-link">Already have an account? <a href="/admin">Login</a></p>
+  </form>
+</div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const tutorBtn = document.getElementById("tutorBtn");
+    const studentBtn = document.getElementById("studentBtn");
+    const tutorForm = document.getElementById("tutorForm");
+    const studentForm = document.getElementById("studentForm");
+
+    tutorBtn.addEventListener("click", () => {
+      tutorBtn.classList.add("active");
+      studentBtn.classList.remove("active");
+      tutorForm.classList.add("active");
+      studentForm.classList.remove("active");
+    });
+
+    studentBtn.addEventListener("click", () => {
+      studentBtn.classList.add("active");
+      tutorBtn.classList.remove("active");
+      studentForm.classList.add("active");
+      tutorForm.classList.remove("active");
+    });
+  </script>
+
+</body>
+</html>

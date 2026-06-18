@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eLEARNING — Learn Anytime, Anywhere</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:500" rel="stylesheet">
+  <script>
+    !function(e){"undefined"==typeof module?this.charming=e:module.exports=e}(function(e,n){"use strict";n=n||{};var t=n.tagName||"span",o=null!=n.classPrefix?n.classPrefix:"char",r=1,a=function(e){for(var n=e.parentNode,a=e.nodeValue,c=a.length,l=-1;++l<c;){var d=document.createElement(t);o&&(d.className=o+r,r++),d.appendChild(document.createTextNode(a[l])),n.insertBefore(d,e)}n.removeChild(e)};return function c(e){for(var n=[].slice.call(e.childNodes),t=n.length,o=-1;++o<t;)c(n[o]);e.nodeType===Node.TEXT_NODE&&a(e)}(e),e});
+  </script>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css'>
+  <link rel="stylesheet" href="/static/style1.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navigation-wrap start-header start-style">
+  <div class="nav-inner">
+    <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto py-4 py-md-0">
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/courses">Courses</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+
+      <div id="switch" class="ml-3 my-auto">
+        <div id="circle"></div>
+      </div>
+
+      {% if request.session.loggedin %}
+      <div class="dropdown ml-3 my-auto">
+        <button class="btn btn-light d-flex align-items-center dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 10px;">
+          <span style="font-weight: 500;">{{ request.session.username }}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="{{ request.session.dashboard }}">
+            <i class="fas fa-tachometer-alt mr-2 text-primary"></i> Dashboard
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/adminlogout">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div id="auth-buttons" class="ml-3 my-auto" style="display: flex; gap: 8px;">
+        <a href="/admin" class="btn btn-primary" style="padding: 6px 16px;">Login</a>
+        <a href="/register" class="btn btn-outline-primary ml-2" style="padding: 6px 16px;">Register</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="/static/script.js"></script>
+
+<!-- Hero: Swiper Slideshow -->
+<section>
+  <div class="swiper-container slideshow">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide slide">
+        <div class="slide-image" style="background-image: url(/static/images/slide4.jpg)"></div>
+        <span class="slide-title">Interactive Learning Spaces</span>
+      </div>
+      <div class="swiper-slide slide">
+        <div class="slide-image" style="background-image: url(/static/images/slide2.jpg);"></div>
+        <span class="slide-title">Dive Into Digital Education</span>
+      </div>
+      <div class="swiper-slide slide">
+        <div class="slide-image" style="background-image: url(/static/images/slide3.avif);"></div>
+        <span class="slide-title">Learn Anytime, Anywhere</span>
+      </div>
+    </div>
+
+    <div class="slideshow-pagination"></div>
+    <div class="slideshow-navigation">
+      <div class="slideshow-navigation-button prev"><span class="fas fa-chevron-left"></span></div>
+      <div class="slideshow-navigation-button next"><span class="fas fa-chevron-right"></span></div>
+    </div>
+  </div>
+</section>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js'></script>
+<script src="/static/script1.js"></script>
+
+<!-- Creative Learning -->
+<div class="creative-learning">
+  <div class="top-section">
+    <div class="heading-text">
+      Creative<br>Learning<br>Made Easy
+    </div>
+    <div class="features-list">
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text">Thousands of creative classes. Beginner to pro.</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text">Taught by creative pros and industry icons.</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text">Learning Paths to help you achieve your goals.</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text">Certificates to celebrate your accomplishments.</span>
+      </div>
+    </div>
+  </div>
+  <div class="cards-section">
+    <div class="card">
+      <div class="card-number">25K+</div>
+      <div class="card-label">Classes</div>
+    </div>
+    <div class="card">
+      <div class="card-number">600K+</div>
+      <div class="card-label">Members</div>
+    </div>
+    <div class="card">
+      <div class="card-number">8K+</div>
+      <div class="card-label">Teachers</div>
+    </div>
+    <div class="card">
+      <div class="card-number">4.8 ★★★★★</div>
+      <div class="card-label">App Store Rating</div>
+    </div>
+  </div>
+</div>
+
+<!-- Service Start -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title text-primary px-3">Services</span>
+    <h1 class="mb-5" style="font-size: 40px; font-family: var(--font-display); font-weight: 800;">What We Offer</h1>
+  </div>
+  <div style="max-width: var(--max-width); margin: 0 auto;">
+    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;">
+      <div class="service-box" onmouseover="serviceHover(this)" onmouseout="serviceOut(this)">
+        <div style="padding: 1rem;">
+          <i class="fa fa-3x fa-graduation-cap"></i>
+          <h5>Skilled Instructors</h5>
+          <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+        </div>
+      </div>
+      <div class="service-box" onmouseover="serviceHover(this)" onmouseout="serviceOut(this)">
+        <div style="padding: 1rem;">
+          <i class="fa fa-3x fa-globe"></i>
+          <h5>Online Classes</h5>
+          <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+        </div>
+      </div>
+      <div class="service-box" onmouseover="serviceHover(this)" onmouseout="serviceOut(this)">
+        <div style="padding: 1rem;">
+          <i class="fa fa-3x fa-home"></i>
+          <h5>Home Projects</h5>
+          <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+        </div>
+      </div>
+      <div class="service-box" onmouseover="serviceHover(this)" onmouseout="serviceOut(this)">
+        <div style="padding: 1rem;">
+          <i class="fa fa-3x fa-book-open"></i>
+          <h5>Book Library</h5>
+          <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Service End -->
+
+<!-- About Start -->
+<div class="about-container">
+  <div class="about-image">
+    <img class="about-img" src="/static/images/about.jpg" alt="Group of students actively participating in an online learning session">
+  </div>
+  <div class="about-content">
+    <p class="about-label">
+      ABOUT US
+      <span class="about-underline"></span>
+    </p>
+    <h2>Welcome to eLEARNING</h2>
+    <p class="about-text">
+      Empower your future with flexible, high-quality online courses designed for learners of all levels. Learn anytime, anywhere, and gain skills that help you grow personally and professionally. Start your journey today!
+    </p>
+    <p class="about-text">
+      Whether you're a student, a working professional, or someone passionate about growth, our eLearning platform is built for you. Explore in-demand courses, earn certifications, and stay ahead in a fast-changing world.
+    </p>
+    <div class="about-features">
+      <ul class="about-list">
+        <li>➤ Skilled Instructors</li>
+        <li>➤ Flexible Learning</li>
+        <li>➤ Career-Focused Content</li>
+      </ul>
+      <ul class="about-list">
+        <li>➤ International Certificate</li>
+        <li>➤ Interactive Quizzes</li>
+        <li>➤ Community Support</li>
+      </ul>
+    </div>
+    <a href="/about" class="btn btn-primary about-button">Read More</a>
+  </div>
+</div>
+<!-- About End -->
+
+<!-- Courses Start -->
+<div class="section" style="padding-bottom: 0;">
+  <div class="section-header">
+    <span class="section-title text-primary px-3">Courses</span>
+    <h1 class="mb-5" style="font-size: 40px; font-family: var(--font-display); font-weight: 800;">Our Popular Courses</h1>
+  </div>
+</div>
+
+<div id="cardGrid">
+  <!-- Python -->
+  <div class="course-item">
+    <div class="img-container">
+      <img src="/static/images/python.png" alt="PYTHON">
+      <div style="position: absolute; top: 12px; left: 12px; background: var(--error); color: #fff; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; z-index: 1;">
+        {{ course.discount|default:"Free" }}
+      </div>
+      <div class="button-overlay">
+        <a href="/python" class="btn btn-primary btn-sm">View Course</a>
+      </div>
+    </div>
+    <div class="text-center">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <img src="/static/images/photo.webp" alt="Instructor" style="border-radius: 50%; width: 28px; height: 28px;">
+          <span style="font-size: 14px; font-weight: 500; color: var(--text-primary);">SATHISH</span>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--surface-secondary); color: var(--text-secondary);">Programming</span>
+      </div>
+      <h3 style="color: var(--text-primary);">PYTHON</h3>
+      <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Learn Python For Free.</div>
+      <div style="font-size: 14px; color: #f5c518; margin-bottom: 12px;">5⭐ <span style="color: var(--text-muted);">(100+ Reviews)</span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 20px; font-weight: 700; color: var(--success);">FREE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML -->
+  <div class="course-item">
+    <div class="img-container">
+      <img src="/static/images/HTML.jpeg" alt="HTML">
+      <div style="position: absolute; top: 12px; left: 12px; background: var(--error); color: #fff; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; z-index: 1;">
+        {{ course.discount|default:"Free" }}
+      </div>
+      <div class="button-overlay">
+        <a href="/HTML" class="btn btn-primary btn-sm">View Course</a>
+      </div>
+    </div>
+    <div class="text-center">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <img src="/static/images/photo.webp" alt="Instructor" style="border-radius: 50%; width: 28px; height: 28px;">
+          <span style="font-size: 14px; font-weight: 500; color: var(--text-primary);">SATHISH</span>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--surface-secondary); color: var(--text-secondary);">Programming</span>
+      </div>
+      <h3 style="color: var(--text-primary);">HTML</h3>
+      <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Learn HTML For Free.</div>
+      <div style="font-size: 14px; color: #f5c518; margin-bottom: 12px;">5⭐ <span style="color: var(--text-muted);">(100+ Reviews)</span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 20px; font-weight: 700; color: var(--success);">FREE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSS -->
+  <div class="course-item">
+    <div class="img-container">
+      <img src="/static/images/css.jpg" alt="CSS">
+      <div style="position: absolute; top: 12px; left: 12px; background: var(--error); color: #fff; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; z-index: 1;">
+        {{ course.discount|default:"Free" }}
+      </div>
+      <div class="button-overlay">
+        <a href="/css" class="btn btn-primary btn-sm">View Course</a>
+      </div>
+    </div>
+    <div class="text-center">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <img src="/static/images/photo.webp" alt="Instructor" style="border-radius: 50%; width: 28px; height: 28px;">
+          <span style="font-size: 14px; font-weight: 500; color: var(--text-primary);">SATHISH</span>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--surface-secondary); color: var(--text-secondary);">Programming</span>
+      </div>
+      <h3 style="color: var(--text-primary);">CSS</h3>
+      <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Learn CSS For Free.</div>
+      <div style="font-size: 14px; color: #f5c518; margin-bottom: 12px;">5⭐ <span style="color: var(--text-muted);">(100+ Reviews)</span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 20px; font-weight: 700; color: var(--success);">FREE</span>
+      </div>
+    </div>
+  </div>
+
+  {% for course in courses %}
+  <div class="course-item">
+    <div class="img-container">
+      {% if course.course_image %}
+      <img src="{{ course.course_image.url }}" alt="{{ course.course_name }}">
+      {% else %}
+      <img src="/static/images/placeholder.png" alt="No Image">
+      {% endif %}
+      <div style="position: absolute; top: 12px; left: 12px; background: var(--error); color: #fff; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 6px; z-index: 1;">
+        {{ course.discount|default:"Free" }}
+      </div>
+      <div class="button-overlay">
+        <a href="getstarted/{{course.id}}" class="btn btn-primary btn-sm">View Course</a>
+      </div>
+    </div>
+    <div class="text-center">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <img src="/static/images/photo.webp" alt="Instructor" style="border-radius: 50%; width: 28px; height: 28px;">
+          <span style="font-size: 14px; font-weight: 500; color: var(--text-primary);">{{ course.professor_name }}</span>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--surface-secondary); color: var(--text-secondary);">{{ course.course_category|title }}</span>
+      </div>
+      <h3 style="color: var(--text-primary);">{{ course.course_name }}</h3>
+      <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">{{ course.course_details|truncatechars:100 }}</div>
+      <div style="font-size: 14px; color: #f5c518; margin-bottom: 12px;">{{ course.course_rating }}⭐ <span style="color: var(--text-muted);">(Reviews)</span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 20px; font-weight: 700; color: var(--primary);">{{ course.course_price }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- Courses End -->
+
+<!-- Paid Courses Start -->
+<div class="section" style="padding-bottom: 0;">
+  <div class="section-header">
+    <span class="section-title text-primary px-3">Courses</span>
+    <h1 class="mb-5" style="font-size: 40px; font-family: var(--font-display); font-weight: 800;">Popular Courses</h1>
+  </div>
+</div>
+
+<div class="row g-4 justify-content-center">
+  <!-- Course 1 -->
+  <div class="col-lg-4 col-md-6">
+    <div class="course-item">
+      <div class="img-container">
+        <img src="/static/images/course-1.jpg" alt="Course 1">
+        <div class="button-overlay">
+          <a href="/getstarted/1" class="btn btn-primary btn-sm">Read More</a>
+          <a href="/cart/1" class="btn btn-primary btn-sm">Join Now</a>
+        </div>
+      </div>
+      <div class="text-center p-4 pb-0">
+        <h3 class="mb-0">$149.00</h3>
+        <div class="mb-3" style="font-size: 14px; color: #f5c518;">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <small style="color: var(--text-muted);">(123)</small>
+        </div>
+        <h5 class="mb-4">Web Design & Development Course for Beginners</h5>
+      </div>
+      <div class="border-top">
+        <small><i class="fa fa-user-tie text-primary me-2"></i>John Doe</small>
+        <small class="border-end"><i class="fa fa-clock text-primary me-2"></i>1.49 Hrs</small>
+        <small><i class="fa fa-user text-primary me-2"></i>30 Students</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course 2 -->
+  <div class="col-lg-4 col-md-6">
+    <div class="course-item">
+      <div class="img-container">
+        <img src="/static/images/course-2.jpg" alt="Course 2">
+        <div class="button-overlay">
+          <a href="/getstarted/2" class="btn btn-primary btn-sm">Read More</a>
+          <a href="/cart/2" class="btn btn-primary btn-sm">Join Now</a>
+        </div>
+      </div>
+      <div class="text-center p-4 pb-0">
+        <h3 class="mb-0">$149.00</h3>
+        <div class="mb-3" style="font-size: 14px; color: #f5c518;">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <small style="color: var(--text-muted);">(123)</small>
+        </div>
+        <h5 class="mb-4">Full Stack Web Development Bootcamp</h5>
+      </div>
+      <div class="border-top">
+        <small><i class="fa fa-user-tie text-primary me-2"></i>Jane Smith</small>
+        <small class="border-end"><i class="fa fa-clock text-primary me-2"></i>2.30 Hrs</small>
+        <small><i class="fa fa-user text-primary me-2"></i>50 Students</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course 3 -->
+  <div class="col-lg-4 col-md-6">
+    <div class="course-item">
+      <div class="img-container">
+        <img src="/static/images/course-3.jpg" alt="Course 3">
+        <div class="button-overlay">
+          <a href="/getstarted/3" class="btn btn-primary btn-sm">Read More</a>
+          <a href="/cart/3" class="btn btn-primary btn-sm">Join Now</a>
+        </div>
+      </div>
+      <div class="text-center p-4 pb-0">
+        <h3 class="mb-0">$149.00</h3>
+        <div class="mb-3" style="font-size: 14px; color: #f5c518;">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <small style="color: var(--text-muted);">(123)</small>
+        </div>
+        <h5 class="mb-4">UI/UX Design Fundamentals</h5>
+      </div>
+      <div class="border-top">
+        <small><i class="fa fa-user-tie text-primary me-2"></i>Emily White</small>
+        <small class="border-end"><i class="fa fa-clock text-primary me-2"></i>1.20 Hrs</small>
+        <small><i class="fa fa-user text-primary me-2"></i>40 Students</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course 4 -->
+  <div class="col-lg-4 col-md-6" style="margin-top: 30px;">
+    <div class="course-item">
+      <div class="img-container">
+        <img src="/static/images/course-3.jpg" alt="Course 4">
+        <div class="button-overlay">
+          <a href="/getstarted/4" class="btn btn-primary btn-sm">Read More</a>
+          <a href="/cart/4" class="btn btn-primary btn-sm">Join Now</a>
+        </div>
+      </div>
+      <div class="text-center p-4 pb-0">
+        <h3 class="mb-0">$129.00</h3>
+        <div class="mb-3" style="font-size: 14px; color: #f5c518;">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-half-alt"></i>
+          <small style="color: var(--text-muted);">(98)</small>
+        </div>
+        <h5 class="mb-4">JavaScript Essentials</h5>
+      </div>
+      <div class="border-top">
+        <small><i class="fa fa-user-tie text-primary me-2"></i>Chris Ray</small>
+        <small class="border-end"><i class="fa fa-clock text-primary me-2"></i>1.15 Hrs</small>
+        <small><i class="fa fa-user text-primary me-2"></i>25 Students</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course 5 -->
+  <div class="col-lg-4 col-md-6" style="margin-top: 30px;">
+    <div class="course-item">
+      <div class="img-container">
+        <img src="/static/images/course-3.jpg" alt="Course 5">
+        <div class="button-overlay">
+          <a href="/getstarted/5" class="btn btn-primary btn-sm">Read More</a>
+          <a href="/cart/5" class="btn btn-primary btn-sm">Join Now</a>
+        </div>
+      </div>
+      <div class="text-center p-4 pb-0">
+        <h3 class="mb-0">$199.00</h3>
+        <div class="mb-3" style="font-size: 14px; color: #f5c518;">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-half-alt"></i>
+          <i class="fa fa-star text-muted"></i>
+          <small style="color: var(--text-muted);">(76)</small>
+        </div>
+        <h5 class="mb-4">Advanced Python Programming</h5>
+      </div>
+      <div class="border-top">
+        <small><i class="fa fa-user-tie text-primary me-2"></i>Sara Khan</small>
+        <small class="border-end"><i class="fa fa-clock text-primary me-2"></i>3.00 Hrs</small>
+        <small><i class="fa fa-user text-primary me-2"></i>60 Students</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course 6 -->
+  <div class="col-lg-4 col-md-6" style="margin-top: 30px;">
+    <div class="course-item">
+      <div class="img-container">
+        <img src="/static/images/course-3.jpg" alt="Course 6">
+        <div class="button-overlay">
+          <a href="/getstarted/6" class="btn btn-primary btn-sm">Read More</a>
+          <a href="/cart/6" class="btn btn-primary btn-sm">Join Now</a>
+        </div>
+      </div>
+      <div class="text-center p-4 pb-0">
+        <h3 class="mb-0">$89.00</h3>
+        <div class="mb-3" style="font-size: 14px; color: #f5c518;">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <small style="color: var(--text-muted);">(200)</small>
+        </div>
+        <h5 class="mb-4">Digital Marketing Basics</h5>
+      </div>
+      <div class="border-top">
+        <small><i class="fa fa-user-tie text-primary me-2"></i>Alex Green</small>
+        <small class="border-end"><i class="fa fa-clock text-primary me-2"></i>1.00 Hrs</small>
+        <small><i class="fa fa-user text-primary me-2"></i>80 Students</small>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Paid Courses End -->
+
+<!-- Testimonials Start -->
+<div id="testimonial-carousel">
+  <h2>What Our Learners Say</h2>
+
+  <div class="testimonial-slide">
+    <div>
+      <img src="https://i.pravatar.cc/100?img=12" alt="User Photo">
+      <div>
+        <h4>Priya R.</h4>
+        <p>B.Sc Student, Tamil Nadu</p>
+        <div style="color: #FFD700; font-size: 18px; margin-bottom: 8px;">★★★★★</div>
+        <p style="font-style: italic;">"This eLearning platform changed the way I study. The courses are easy to follow, and the interactive content keeps me engaged. Highly recommended!"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonial-slide">
+    <div>
+      <img src="https://i.pravatar.cc/100?img=7" alt="User Photo">
+      <div>
+        <h4>Arun K.</h4>
+        <p>Engineering Aspirant</p>
+        <div style="color: #FFD700; font-size: 18px; margin-bottom: 8px;">★★★★☆</div>
+        <p style="font-style: italic;">"Great platform with quality content. I liked the coding tutorials and mock tests. Could improve with more Tamil-based content."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonial-slide">
+    <div>
+      <img src="https://i.pravatar.cc/100?img=5" alt="User Photo">
+      <div>
+        <h4>Sneha M.</h4>
+        <p>NEET Aspirant</p>
+        <div style="color: #FFD700; font-size: 18px; margin-bottom: 8px;">★★★★★</div>
+        <p style="font-style: italic;">"The best part is how flexible the learning schedule is. I can learn anytime, anywhere. It helped me score better in my mock tests."</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 32px;">
+    <button onclick="changeSlide(-1)" style="padding: 8px 20px; margin-right: 10px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-full); cursor: pointer;">‹ Prev</button>
+    <button onclick="changeSlide(1)" style="padding: 8px 20px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-full); cursor: pointer;">Next ›</button>
+  </div>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('#testimonial-carousel .testimonial-slide');
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.display = i === index ? 'block' : 'none';
+    });
+  }
+
+  function changeSlide(step) {
+    currentSlide = (currentSlide + step + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  setInterval(() => changeSlide(1), 6000);
+  showSlide(currentSlide);
+</script>
+<!-- Testimonials End -->
+
+<!-- Footer Start -->
+<div class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <i class="fa fa-book"></i> eLEARNING
+      </div>
+      <p class="footer-desc">Empower your future with flexible, high-quality online courses designed for learners of all levels. Learn anytime, anywhere.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <h4>Quick Link</h4>
+      <ul class="footer-links">
+        <li><a href="/about"><i class="fas fa-angle-right"></i>About Us</a></li>
+        <li><a href="/contact"><i class="fas fa-angle-right"></i>Contact Us</a></li>
+        <li><a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a></li>
+        <li><a href="#"><i class="fas fa-angle-right"></i>Terms & Conditions</a></li>
+        <li><a href="#"><i class="fas fa-angle-right"></i>FAQs & Help</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <div class="footer-contact">
+        <p><i class="fas fa-map-marker-alt"></i>123 Street, New York, USA</p>
+        <p><i class="fas fa-phone-alt"></i>+012 345 67890</p>
+        <p><i class="fas fa-envelope"></i>info@example.com</p>
+      </div>
+    </div>
+
+    <div class="footer-newsletter">
+      <h4>Newsletter</h4>
+      <p style="color: #94A3B8; font-size: 15px; text-align: left; margin: 0 0 16px;">Stay updated with our latest courses and offers.</p>
+      <form>
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">SignUp</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p style="color: #64748B; font-size: 14px; text-align: center; margin: 0; padding: 0;">
+      &copy; <a href="#" style="color: #94A3B8;">Your Site Name</a>, All Right Reserved.
+      <br>Designed By <a href="https://htmlcodex.com" style="color: #94A3B8;">HTML Codex</a>
+      <br>Distributed By <a href="https://themewagon.com" style="color: #94A3B8;">ThemeWagon</a>
+    </p>
+    <div style="margin-top: 12px; display: flex; justify-content: center; gap: 20px;">
+      <a href="/" style="color: #64748B; font-size: 14px;">Home</a>
+      <a href="#" style="color: #64748B; font-size: 14px;">Cookies</a>
+      <a href="#" style="color: #64748B; font-size: 14px;">Help</a>
+      <a href="#" style="color: #64748B; font-size: 14px;">FAQs</a>
+    </div>
+  </div>
+</div>
+<!-- Footer End -->
+
+<script>
+  const isLoggedIn = "{{ request.session.loggedin|yesno:'true,false' }}";
+  const username = "{{ request.session.username|default:'' }}";
+  const userDashboardURL = "{{ request.session.dashboard|default:'/dashboard' }}";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (isLoggedIn === "true") {
+      const authButtons = document.getElementById("auth-buttons");
+      const profileMenu = document.querySelector(".dropdown");
+      const profileName = document.querySelector("#profileDropdown span");
+      const dashboardLink = document.querySelector(".dropdown-item[href='/dashboard']");
+
+      if (authButtons) authButtons.style.display = "none";
+      if (profileMenu) profileMenu.style.display = "inline-block";
+      if (profileName) profileName.innerText = username || "My Profile";
+      if (dashboardLink) dashboardLink.setAttribute("href", userDashboardURL);
+    } else {
+      const authButtons = document.getElementById("auth-buttons");
+      const profileMenu = document.querySelector(".dropdown");
+
+      if (authButtons) authButtons.style.display = "flex";
+      if (profileMenu) profileMenu.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+</html>

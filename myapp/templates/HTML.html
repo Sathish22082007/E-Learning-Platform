@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML Tutorial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  .sidebar-item {
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .sidebar-item.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .sidebar-item:hover {
+    background-color: #ddd;
+  }
+  
+</style>
+</head>
+<body style="margin:0; font-family:Segoe UI, sans-serif;">
+
+<!-- Navbar -->
+<div class="navigation-wrap start-header start-style">
+  <div class="nav-inner">
+    <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto py-4 py-md-0">
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/courses">Courses</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+
+      <div id="switch" class="ml-3 my-auto">
+        <div id="circle"></div>
+      </div>
+
+      {% if request.session.loggedin %}
+      <div class="dropdown ml-3 my-auto">
+        <button class="btn btn-light d-flex align-items-center dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 10px;">
+          <span style="font-weight: 500;">{{ request.session.username }}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="{{ request.session.dashboard }}">
+            <i class="fas fa-tachometer-alt mr-2 text-primary"></i> Dashboard
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/adminlogout">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div id="auth-buttons" class="ml-3 my-auto" style="display: flex; gap: 8px;">
+        <a href="/admin" class="btn btn-primary" style="padding: 6px 16px;">Login</a>
+        <a href="/register" class="btn btn-outline-primary ml-2" style="padding: 6px 16px;">Register</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="/static/script.js"></script>
+
+  <div style="display:flex; margin-top:80px;">
+
+<!-- Sidebar -->
+<aside id="sidebar" style="position:fixed; top:80px; left:0; width:240px; height:calc(100vh - 80px); background-color:#f1f1f1; overflow-y:auto; padding:1rem; border-right:1px solid #ccc; z-index:999;">
+  <!-- Sidebar content -->
+  <h2 style="margin-bottom:1rem;">HTML Tutorial</h2>
+  <div id="sidebar" style="display:flex; flex-direction:column; gap:5px;">
+    <div class="sidebar-item active" onclick="showSection('intro', this)">HTML Introduction</div>
+    <div class="sidebar-item" onclick="showSection('editor', this)">HTML Formatting</div>
+    <div class="sidebar-item" onclick="showSection('basic', this)">HTML Tags</div>
+    <div class="sidebar-item" onclick="showSection('elements', this)">HTML Elements</div>
+    <div class="sidebar-item" onclick="showSection('attributes', this)">HTML Attributes</div>
+    <div class="sidebar-item" onclick="showSection('headings', this)">HTML Anchor</div>
+    <div class="sidebar-item" onclick="showSection('paragraphs', this)">HTML Images</div>
+    <div class="sidebar-item" onclick="showSection('styles', this)">HTML Tables</div>
+    <div class="sidebar-item" onclick="showSection('formatting', this)">HTML Lists</div>
+    <div class="sidebar-item" onclick="showSection('quotations', this)">HTML Forms</div>
+    <div class="sidebar-item" onclick="showSection('comments', this)">HTML Frames</div>
+    <div class="sidebar-item" onclick="showSection('colors', this)">HTML Marquee</div>
+  </div>
+</aside>
+
+
+<!-- Main Content -->
+  <main style="margin-left:240px; margin-left: 240px; padding: 2rem; padding:2rem; width: 100%;">
+    <!-- HTML HOME -->
+    <div id="intro" class="main-section">
+<!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Home</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+
+      <!-- Intro Section -->
+      <div style="background-color:#dff1e6; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+        <h1 style="margin-bottom:1rem;">Learn HTML</h1>
+        <p>HTML is the standard markup language for Web pages.</p>
+        <p>With HTML you can create your own Website.</p>
+        <p>HTML is easy to learn - You will enjoy it!</p>
+        <button style="margin-top:1rem; background-color:#007bff; color:white; padding:10px 20px; font-size:1rem; border:none; border-radius:6px; cursor:pointer;">Start learning HTML now »</button>
+      </div>
+
+      <!-- Try it Yourself Section -->
+      <div>
+        <h2 style="margin-bottom:0.5rem;">Easy Learning with HTML "Try it Yourself"</h2>
+        <p>With our "Try it Yourself" editor, you can edit the HTML code and view the result:</p>
+      </div>
+      <!-- Code Example Section -->
+      <div style="margin-top:1rem; padding:1rem; background-color:#ffffff; border:1px solid #ccc; border-radius:6px;">
+        <p><strong>Example:</strong></p>
+        <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px; overflow-x:auto;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My First HTML Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;h1&gt;This is a Heading&lt;/h1&gt;
+  &lt;p&gt;This is a paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+        <button style="margin-top:1rem; background-color:#28a745; color:white; padding:10px 20px; border:none; border-radius:6px; cursor:pointer;">Try it Yourself »</button>
+      </div>
+
+      <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">Example Explained</h2>
+  <p>The <code>&lt;!DOCTYPE html&gt;</code> declaration defines that this document is an HTML5 document.</p>
+  <p>The <code>&lt;html&gt;</code> element is the root element of an HTML page.</p>
+  <p>The <code>&lt;head&gt;</code> element contains meta information about the HTML page.</p>
+  <p>The <code>&lt;title&gt;</code> element specifies a title for the HTML page (which is shown in the browser's title bar or in the page's tab).</p>
+  <p>The <code>&lt;body&gt;</code> element defines the document's body, and is a container for all the visible contents, such as headings, paragraphs, images, hyperlinks, tables, lists, etc.</p>
+  <p>The <code>&lt;h1&gt;</code> element defines a large heading.</p>
+  <p>The <code>&lt;p&gt;</code> element defines a paragraph.</p>
+
+  <h3 style="margin-top:20px;">What is an HTML Element?</h3>
+  <p>An HTML element is defined by a start tag, some content, and an end tag:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;tagname&gt; Content goes here... &lt;/tagname&gt;</pre>
+  <p>The HTML element is everything from the start tag to the end tag:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;h1&gt;My First Heading&lt;/h1&gt;
+&lt;p&gt;My first paragraph.&lt;/p&gt;
+  </pre>
+
+  <table style="border-collapse:collapse; width:100%; margin-top:15px;">
+    <tr>
+      <th style="border:1px solid #ddd; padding:8px; background:#f2f2f2;">Start tag</th>
+      <th style="border:1px solid #ddd; padding:8px; background:#f2f2f2;">Element content</th>
+      <th style="border:1px solid #ddd; padding:8px; background:#f2f2f2;">End tag</th>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:8px;">&lt;h1&gt;</td>
+      <td style="border:1px solid #ddd; padding:8px;">My First Heading</td>
+      <td style="border:1px solid #ddd; padding:8px;">&lt;/h1&gt;</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:8px;">&lt;p&gt;</td>
+      <td style="border:1px solid #ddd; padding:8px;">My first paragraph.</td>
+      <td style="border:1px solid #ddd; padding:8px;">&lt;/p&gt;</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:8px;">&lt;br&gt;</td>
+      <td style="border:1px solid #ddd; padding:8px;">none</td>
+      <td style="border:1px solid #ddd; padding:8px;">none</td>
+    </tr>
+  </table>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; margin:20px 0; border-radius:4px;">
+    <strong>Note:</strong> Some HTML elements have no content (like the <code>&lt;br&gt;</code> element). These elements are called empty elements. Empty elements do not have an end tag!
+  </div>
+
+  <h3>Web Browsers</h3>
+  <p>The purpose of a web browser (Chrome, Edge, Firefox, Safari) is to read HTML documents and display them correctly.</p>
+  <p>A browser does not display the HTML tags, but uses them to determine how to display the document:</p>
+  <p><strong>View in Browser</strong></p>
+
+  <h3>HTML Page Structure</h3>
+  <p>Below is a visualization of an HTML page structure:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;This is a heading&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+    &lt;p&gt;This is another paragraph.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; margin:20px 0; border-radius:4px;">
+    <strong>Note:</strong> The content inside the <code>&lt;body&gt;</code> section will be displayed in a browser. The content inside the <code>&lt;title&gt;</code> element will be shown in the browser's title bar or in the page's tab.
+  </div>
+
+  <h3>HTML History</h3>
+  <table style="border-collapse:collapse; width:100%; margin-top:15px;">
+    <tr>
+      <th style="border:1px solid #ddd; padding:8px; background:#f2f2f2;">Year</th>
+      <th style="border:1px solid #ddd; padding:8px; background:#f2f2f2;">Version</th>
+    </tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">1989</td><td style="border:1px solid #ddd; padding:8px;">Tim Berners-Lee invented www</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">1991</td><td style="border:1px solid #ddd; padding:8px;">Tim Berners-Lee invented HTML</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">1993</td><td style="border:1px solid #ddd; padding:8px;">Dave Raggett drafted HTML+</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">1995</td><td style="border:1px solid #ddd; padding:8px;">HTML Working Group defined HTML 2.0</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">1997</td><td style="border:1px solid #ddd; padding:8px;">W3C Recommendation: HTML 3.2</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">1999</td><td style="border:1px solid #ddd; padding:8px;">W3C Recommendation: HTML 4.01</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2000</td><td style="border:1px solid #ddd; padding:8px;">W3C Recommendation: XHTML 1.0</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2008</td><td style="border:1px solid #ddd; padding:8px;">WHATWG HTML5 First Public Draft</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2012</td><td style="border:1px solid #ddd; padding:8px;">WHATWG HTML5 Living Standard</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2014</td><td style="border:1px solid #ddd; padding:8px;">W3C Recommendation: HTML5</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2016</td><td style="border:1px solid #ddd; padding:8px;">W3C Candidate Recommendation: HTML 5.1</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2017</td><td style="border:1px solid #ddd; padding:8px;">W3C Recommendation: HTML5.1 2nd Edition</td></tr>
+    <tr><td style="border:1px solid #ddd; padding:8px;">2017</td><td style="border:1px solid #ddd; padding:8px;">W3C Recommendation: HTML5.2</td></tr>
+  </table>
+
+  <p>This tutorial follows the latest HTML5 standard.</p>
+</div>
+
+</div>
+
+    <!-- HTML Editors Section -->
+     
+<div id="editor" class="main-section" style="display:none;">
+  <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">HTML Text Formatting</h2>
+  <p>HTML contains several elements for defining text with a special meaning.</p>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <p><b>This text is bold</b></p>
+  <p><i>This text is italic</i></p>
+  <p>This is <sub>subscript</sub> and <sup>superscript</sup></p>
+
+  <h3 style="margin-top:20px;">HTML Formatting Elements</h3>
+  <p>Formatting elements were designed to display special types of text:</p>
+  <ul style="margin-left:20px;">
+    <li><code>&lt;b&gt;</code> - Bold text</li>
+    <li><code>&lt;strong&gt;</code> - Important text</li>
+    <li><code>&lt;i&gt;</code> - Italic text</li>
+    <li><code>&lt;em&gt;</code> - Emphasized text</li>
+    <li><code>&lt;mark&gt;</code> - Marked text</li>
+    <li><code>&lt;small&gt;</code> - Smaller text</li>
+    <li><code>&lt;del&gt;</code> - Deleted text</li>
+    <li><code>&lt;ins&gt;</code> - Inserted text</li>
+    <li><code>&lt;sub&gt;</code> - Subscript text</li>
+    <li><code>&lt;sup&gt;</code> - Superscript text</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code> Elements</h3>
+  <p>The HTML <code>&lt;b&gt;</code> element defines bold text, without any extra importance.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;b&gt;This text is bold&lt;/b&gt;</pre>
+
+  <p>The HTML <code>&lt;strong&gt;</code> element defines text with strong importance. The content inside is typically displayed in bold.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;strong&gt;This text is important!&lt;/strong&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;i&gt;</code> and <code>&lt;em&gt;</code> Elements</h3>
+  <p>The HTML <code>&lt;i&gt;</code> element defines a part of text in an alternate voice or mood. The content inside is typically displayed in italic.</p>
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:10px 0;">
+    <strong>Tip:</strong> The <code>&lt;i&gt;</code> tag is often used to indicate a technical term, a phrase from another language, a thought, a ship name, etc.
+  </div>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;i&gt;This text is italic&lt;/i&gt;</pre>
+
+  <p>The HTML <code>&lt;em&gt;</code> element defines emphasized text. The content inside is typically displayed in italic.</p>
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:10px 0;">
+    <strong>Tip:</strong> A screen reader will pronounce the words in <code>&lt;em&gt;</code> with an emphasis, using verbal stress.
+  </div>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;em&gt;This text is emphasized&lt;/em&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;small&gt;</code> Element</h3>
+  <p>The HTML <code>&lt;small&gt;</code> element defines smaller text:</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;small&gt;This is some smaller text.&lt;/small&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;mark&gt;</code> Element</h3>
+  <p>The HTML <code>&lt;mark&gt;</code> element defines text that should be marked or highlighted:</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;p&gt;Do not forget to buy &lt;mark&gt;milk&lt;/mark&gt; today.&lt;/p&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;del&gt;</code> Element</h3>
+  <p>The HTML <code>&lt;del&gt;</code> element defines text that has been deleted from a document. Browsers will usually strike a line through deleted text:</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;p&gt;My favorite color is &lt;del&gt;blue&lt;/del&gt; red.&lt;/p&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;ins&gt;</code> Element</h3>
+  <p>The HTML <code>&lt;ins&gt;</code> element defines a text that has been inserted into a document. Browsers will usually underline inserted text:</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;p&gt;My favorite color is &lt;del&gt;blue&lt;/del&gt; &lt;ins&gt;red&lt;/ins&gt;.&lt;/p&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;sub&gt;</code> Element</h3>
+  <p>The HTML <code>&lt;sub&gt;</code> element defines subscript text. Subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font. Subscript text can be used for chemical formulas, like H<sub>2</sub>O:</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;p&gt;This is &lt;sub&gt;subscripted&lt;/sub&gt; text.&lt;/p&gt;</pre>
+
+  <h3 style="margin-top:20px;">HTML <code>&lt;sup&gt;</code> Element</h3>
+  <p>The HTML <code>&lt;sup&gt;</code> element defines superscript text. Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW<sup>[1]</sup>:</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">&lt;p&gt;This is &lt;sup&gt;superscripted&lt;/sup&gt; text.&lt;/p&gt;</pre>
+</div>
+
+</div>
+
+<!-- HTML Basic Section -->
+<div id="basic" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+  <!-- HTML Tags Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Tags</h2>
+  <p style="color:#888; font-size:0.9rem;">17 Mar 2025 | 15 min read</p>
+
+  <p>HTML tags are like keywords that define how a web browser will format and display the content. With the help of tags, a web browser can distinguish between HTML content and plain text.</p>
+  
+  <p>HTML tags contain three main parts: <strong>opening tag</strong>, <strong>content</strong>, and <strong>closing tag</strong>. However, some tags are self-closing (unclosed tags).</p>
+  
+  <p>When a browser reads an HTML document, it parses it from top to bottom and left to right. HTML tags are used to structure web pages and define their content's behavior and appearance.</p>
+
+  <p>Essential HTML tags are required so the browser can differentiate between regular text and HTML. You can use as many tags as needed based on your code’s requirements.</p>
+
+  <ul style="margin-top:1rem;">
+    <li>All HTML tags are enclosed within <code>&lt; &gt;</code> brackets.</li>
+    <li>Each tag performs a specific task.</li>
+    <li>Most tags require a closing tag <code>&lt;/tag&gt;</code>, except self-closing tags.</li>
+  </ul>
+
+  <div style="margin-top:1rem;">
+    <p><strong>Syntax:</strong></p>
+    <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">&lt;tag&gt; content &lt;/tag&gt;</pre>
+  </div>
+
+  <h3 style="margin-top:2rem;">HTML Tag Examples</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;p&gt; Paragraph Tag &lt;/p&gt;
+&lt;h2&gt; Heading Tag &lt;/h2&gt;
+&lt;b&gt; Bold Tag &lt;/b&gt;
+&lt;i&gt; Italic Tag &lt;/i&gt;
+&lt;u&gt; Underline Tag &lt;/u&gt;
+  </pre>
+
+  <button style="margin-top:1rem; background-color:#28a745; color:white; padding:10px 20px; border:none; border-radius:6px; cursor:pointer;">Test it Now »</button>
+
+  <h3 style="margin-top:2rem;">Unclosed HTML Tags</h3>
+  <p>Some HTML tags do not have a closing tag. Common examples include:</p>
+  <ul>
+    <li><code>&lt;br&gt;</code> – Inserts a line break.</li>
+    <li><code>&lt;hr&gt;</code> – Inserts a horizontal line.</li>
+  </ul>
+
+  <h3 style="margin-top:2rem;">HTML Meta Tags</h3>
+  <p><code>DOCTYPE</code>, <code>title</code>, <code>link</code>, <code>meta</code>, <code>style</code></p>
+
+  <h3 style="margin-top:1.5rem;">HTML Text Tags</h3>
+  <p><code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;abbr&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;br&gt;</code> and more.</p>
+
+  <h3 style="margin-top:1.5rem;">HTML Link Tags</h3>
+  <p><code>&lt;a&gt;</code>, <code>&lt;base&gt;</code></p>
+
+  <h3 style="margin-top:1.5rem;">HTML Image and Object Tags</h3>
+  <p><code>&lt;img&gt;</code>, <code>&lt;area&gt;</code>, <code>&lt;map&gt;</code>, <code>&lt;param&gt;</code>, <code>&lt;object&gt;</code></p>
+
+  <h3 style="margin-top:1.5rem;">HTML List Tags</h3>
+  <p><code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;dl&gt;</code>, <code>&lt;dt&gt;</code>, <code>&lt;dd&gt;</code></p>
+
+  <h3 style="margin-top:1.5rem;">HTML Table Tags</h3>
+  <p><code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;td&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;caption&gt;</code></p>
+
+  <h3 style="margin-top:1.5rem;">HTML Form Tags</h3>
+  <p><code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;label&gt;</code></p>
+
+  <h3 style="margin-top:1.5rem;">HTML Scripting Tags</h3>
+  <p><code>&lt;script&gt;</code>, <code>&lt;noscript&gt;</code></p>
+
+  <p style="margin-top:1.5rem;"><strong>Note:</strong> We will see practical examples of these tags in upcoming chapters.</p>
+</div>
+
+</div>
+
+<!-- HTML Elements Section -->
+<div id="elements" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <!-- HTML Elements Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+  
+  <h2 style="margin-bottom:1rem;">HTML Elements</h2>
+
+  <p>An HTML element is defined by a <strong>start tag</strong>, some <strong>content</strong>, and an <strong>end tag</strong>.</p>
+
+  <p>The HTML element includes everything from the start tag to the end tag:</p>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">&lt;tagname&gt;Content goes here...&lt;/tagname&gt;</pre>
+
+  <h3>Examples of HTML Elements</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;h1&gt;My First Heading&lt;/h1&gt;
+&lt;p&gt;My first paragraph.&lt;/p&gt;
+  </pre>
+
+  <table style="width:100%; margin-top:1rem; border-collapse:collapse;">
+    <thead>
+      <tr style="background-color:#eee;">
+        <th style="padding:0.75rem; border:1px solid #ccc;">Start tag</th>
+        <th style="padding:0.75rem; border:1px solid #ccc;">Element content</th>
+        <th style="padding:0.75rem; border:1px solid #ccc;">End tag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:0.75rem; border:1px solid #ccc;">&lt;h1&gt;</td>
+        <td style="padding:0.75rem; border:1px solid #ccc;">My First Heading</td>
+        <td style="padding:0.75rem; border:1px solid #ccc;">&lt;/h1&gt;</td>
+      </tr>
+      <tr>
+        <td style="padding:0.75rem; border:1px solid #ccc;">&lt;p&gt;</td>
+        <td style="padding:0.75rem; border:1px solid #ccc;">My first paragraph.</td>
+        <td style="padding:0.75rem; border:1px solid #ccc;">&lt;/p&gt;</td>
+      </tr>
+      <tr>
+        <td style="padding:0.75rem; border:1px solid #ccc;">&lt;br&gt;</td>
+        <td style="padding:0.75rem; border:1px solid #ccc;">None</td>
+        <td style="padding:0.75rem; border:1px solid #ccc;">None</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:1rem;"><strong>Note:</strong> Some HTML elements have no content (like the <code>&lt;br&gt;</code> element). These are called <strong>empty elements</strong> and do not have a closing tag.</p>
+
+  <h3 style="margin-top:2rem;">Nested HTML Elements</h3>
+  <p>HTML elements can be <strong>nested</strong>, which means they can contain other elements. Every HTML document consists of nested HTML elements.</p>
+
+  <p>The following example contains four nested elements: <code>&lt;html&gt;</code>, <code>&lt;body&gt;</code>, <code>&lt;h1&gt;</code>, and <code>&lt;p&gt;</code>.</p>
+
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;My First Heading&lt;/h1&gt;
+&lt;p&gt;My first paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <h3>Example Explained</h3>
+  <ul style="margin-left:1.5rem;">
+    <li><code>&lt;html&gt;</code> is the root element that wraps the whole document.</li>
+    <li><code>&lt;body&gt;</code> contains the visible page content.</li>
+    <li><code>&lt;h1&gt;</code> is a heading element.</li>
+    <li><code>&lt;p&gt;</code> is a paragraph element.</li>
+  </ul>
+
+  <h3 style="margin-top:2rem;">Never Skip the End Tag</h3>
+  <p>Some elements might display correctly without an end tag, but it's bad practice. Always use proper closing tags to avoid errors.</p>
+
+  <pre style="background-color:#fff3cd; padding:1rem; border-radius:6px;">
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;p&gt;This is a paragraph
+&lt;p&gt;This is another paragraph
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <p><strong>Warning:</strong> Never rely on missing end tags! It can cause unexpected behavior.</p>
+
+  <h3 style="margin-top:2rem;">Empty HTML Elements</h3>
+  <p>HTML elements with no content are called <strong>empty elements</strong>. For example:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;p&gt;This is a &lt;br&gt; paragraph with a line break.&lt;/p&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">HTML is Not Case Sensitive</h3>
+  <p>HTML tags are <strong>not</strong> case-sensitive. <code>&lt;P&gt;</code> is the same as <code>&lt;p&gt;</code>.</p>
+  <p>However, it is recommended to use <strong>lowercase</strong> tag names, especially for compatibility with XHTML and modern coding standards.</p>
+
+  <p style="margin-top:1rem;">At W3Schools and in best practice tutorials, lowercase is always preferred.</p>
+
+</div>
+
+</div>
+
+<!-- HTML Attributes Section -->
+<div id="attributes" class="main-section" style="display:none;">
+  <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+  <h1>HTML Attributes</h1>
+  <p>Attributes provide extra information about elements, like `href`, `src`, `alt`, and `style`.</p>
+  <!-- HTML Attributes Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:1rem;">HTML Attributes</h2>
+
+  <p>HTML attributes provide additional information about HTML elements.</p>
+
+  <ul style="margin-left:1.5rem;">
+    <li>All HTML elements can have attributes.</li>
+    <li>Attributes are always specified in the start tag.</li>
+    <li>They usually come in name/value pairs like: <code>name="value"</code>.</li>
+  </ul>
+
+  <h3 style="margin-top:2rem;">The <code>href</code> Attribute</h3>
+  <p>The <code>&lt;a&gt;</code> tag defines a hyperlink. The <code>href</code> attribute specifies the link’s destination:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;a href="https://www.w3schools.com"&gt;Visit W3Schools&lt;/a&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">The <code>src</code> Attribute</h3>
+  <p>The <code>&lt;img&gt;</code> tag is used to embed an image. The <code>src</code> attribute holds the path to that image:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="img_girl.jpg"&gt;
+  </pre>
+
+  <p>Two ways to use <code>src</code>:</p>
+  <ul>
+    <li><strong>Absolute URL:</strong> <code>src="https://www.example.com/image.jpg"</code></li>
+    <li><strong>Relative URL:</strong> <code>src="images/pic.jpg"</code> or <code>src="/images/pic.jpg"</code></li>
+  </ul>
+  <p><strong>Tip:</strong> Use relative URLs to keep your site flexible and domain-independent.</p>
+
+  <h3 style="margin-top:2rem;">The <code>width</code> and <code>height</code> Attributes</h3>
+  <p>Specify image size in pixels using <code>width</code> and <code>height</code>:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="img_girl.jpg" width="500" height="600"&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">The <code>alt</code> Attribute</h3>
+  <p>This provides alternate text when an image cannot be shown (due to errors or accessibility):</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="img_girl.jpg" alt="Girl with a jacket"&gt;
+  </pre>
+  <p><strong>Example with missing image:</strong></p>
+  <pre style="background-color:#fff3cd; padding:1rem; border-radius:6px;">
+&lt;img src="img_typo.jpg" alt="Girl with a jacket"&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">The <code>style</code> Attribute</h3>
+  <p>Adds inline styling such as colors and fonts:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;p style="color:red;"&gt;This is a red paragraph.&lt;/p&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">The <code>lang</code> Attribute</h3>
+  <p>Used in the <code>&lt;html&gt;</code> tag to define the language of the page:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;html lang="en"&gt;
+&lt;html lang="en-US"&gt;
+  </pre>
+  <p>Use language + country codes for more accuracy (e.g., <code>en-US</code>).</p>
+
+  <h3 style="margin-top:2rem;">The <code>title</code> Attribute</h3>
+  <p>Shows a tooltip when you hover over the element:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;p title="I'm a tooltip"&gt;This is a paragraph.&lt;/p&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">We Suggest: Use Lowercase Attributes</h3>
+  <p>HTML is not case-sensitive, but W3C recommends lowercase for better consistency and XHTML compatibility:</p>
+  <p><strong>Good:</strong></p>
+  <pre style="background-color:#e6ffe6; padding:1rem; border-radius:6px;">
+&lt;a href="https://www.w3schools.com/html/"&gt;Visit our HTML tutorial&lt;/a&gt;
+  </pre>
+  <p><strong>Bad:</strong></p>
+  <pre style="background-color:#ffe6e6; padding:1rem; border-radius:6px;">
+&lt;a href=https://www.w3schools.com/html/&gt;Visit our HTML tutorial&lt;/a&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">We Suggest: Always Quote Attribute Values</h3>
+  <p>Although quotes are optional, always use them—especially when the value contains spaces.</p>
+  <p><strong>Bad Example:</strong></p>
+  <pre style="background-color:#fff3cd; padding:1rem; border-radius:6px;">
+&lt;p title=Description of W3Schools&gt;
+  </pre>
+  <p>This will not display the tooltip correctly. Always use quotes!</p>
+
+</div>
+
+</div>
+
+<!-- HTML Headings Section -->
+<div id="headings" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+  <!-- HTML Anchor Tag Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Anchor Tag</h2>
+  <p style="color:#888; font-size:0.9rem;">12 Mar 2025 | 2 min read</p>
+
+  <p>The HTML <code>&lt;a&gt;</code> (anchor) tag defines a hyperlink that links one page to another page. It can also link to files, locations on the same page, or external URLs.</p>
+
+  <p>The <strong><code>href</code></strong> attribute is the most important part of the anchor tag—it specifies the destination of the link.</p>
+
+  <h3 style="margin-top:1.5rem;">Syntax</h3>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;a href="destination_url"&gt;Link Text&lt;/a&gt;
+  </pre>
+
+  <h3 style="margin-top:1.5rem;">Basic Example</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;a href="second.html"&gt;Click for Second Page&lt;/a&gt;
+  </pre>
+
+  <h3 style="margin-top:1.5rem;">Opening Link in a New Tab using <code>target</code> Attribute</h3>
+  <p>If you want to open the link in a new tab or window, use the <code>target="_blank"</code> attribute inside the anchor tag.</p>
+
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Link using target attribute&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;p&gt;Click on 
+    &lt;a href="https://www.tpointtech.com/" target="_blank"&gt;this-link&lt;/a&gt; 
+    to go on home page of Tpoint Tech.
+  &lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <div style="background-color:#fff3cd; padding:1rem; border-radius:6px; margin-top:1rem;">
+    <strong>Note:</strong>
+    <ul style="margin-left:1.5rem; margin-top:0.5rem;">
+      <li>The <code>target</code> attribute should be used along with the <code>href</code> attribute.</li>
+      <li>If you don’t use <code>target="_blank"</code>, the link will open in the same tab.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin-top:2rem;">Appearance of Anchor Tags</h3>
+  <ul style="margin-left:1.5rem;">
+    <li><span style="color:blue;">Unvisited Link</span>: Underlined and blue.</li>
+    <li><span style="color:purple;">Visited Link</span>: Underlined and purple.</li>
+    <li><span style="color:red;">Active Link</span>: Underlined and red while being clicked.</li>
+  </ul>
+
+</div>
+
+</div>
+
+<!-- HTML Paragraphs Section -->
+<div id="paragraphs" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+  <!-- HTML Image Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Image</h2>
+  <p style="color:#888; font-size:0.9rem;">12 Mar 2025 | 5 min read</p>
+
+  <p>The HTML <code>&lt;img&gt;</code> tag is used to display images on a web page. It is an empty tag, meaning it does not have a closing tag—it only contains attributes.</p>
+
+  <h3 style="margin-top:1.5rem;">Syntax</h3>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;img src="url"&gt;
+  </pre>
+
+  <p>Here, <code>src</code> defines the image source (location). The URL can be <strong>relative</strong> or <strong>absolute</strong>.</p>
+
+  <h3>Example</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;h2&gt;HTML Image Example&lt;/h2&gt;
+&lt;img src="good_morning.jpg" alt="Good Morning Friends"&gt;
+  </pre>
+
+  <h3>Organizing Images</h3>
+  <p>It’s best practice to place images inside an <code>images/</code> folder to keep your project organized.</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="images/good_morning.jpg" alt="Good Morning Friends"&gt;
+  </pre>
+
+  <h3>Loading from Another Directory</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="E:/images/animal.png" height="180" width="300" alt="animal image"&gt;
+  </pre>
+
+  <div style="background-color:#fff3cd; padding:1rem; border-radius:6px; margin-top:1rem;">
+    <strong>Note:</strong> If the <code>src</code> URL is incorrect, the image won’t be displayed. Always use correct paths!
+  </div>
+
+  <h3 style="margin-top:2rem;">Important Attributes of <code>&lt;img&gt;</code> Tag</h3>
+
+  <ul style="margin-left:1.5rem;">
+    <li><strong>src</strong>: Specifies the path to the image (required).</li>
+    <li><strong>alt</strong>: Provides alternate text if the image cannot be displayed.</li>
+    <li><strong>width</strong> and <strong>height</strong>: Set image size (in pixels or %). Better handled with CSS.</li>
+  </ul>
+
+  <h4>Example with <code>alt</code>, <code>height</code>, and <code>width</code>:</h4>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="animal.jpg" height="180" width="300" alt="animal image"&gt;
+  </pre>
+
+  <div style="background-color:#e9f7ef; padding:1rem; border-radius:6px; margin-top:1rem;">
+    <strong>SEO Tip:</strong> Always include meaningful <code>alt</code> text to improve accessibility and SEO.
+  </div>
+
+  <h3 style="margin-top:2rem;">Spacing Attributes (Legacy, not recommended in modern HTML)</h3>
+  <ul style="margin-left:1.5rem;">
+    <li><strong>hspace</strong>: Adds horizontal spacing.</li>
+    <li><strong>vspace</strong>: Adds vertical spacing.</li>
+  </ul>
+
+  <h4>Example:</h4>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="good-morning.jpg" alt="Good Morning Friends" vspace="30" hspace="20"&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">Border Attribute</h3>
+  <p>You can add a border around the image using the <code>border</code> attribute (deprecated in HTML5 — use CSS instead).</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;img src="good-morning.jpg" alt="Good Morning Friends" border="3"&gt;
+  </pre>
+
+  <h3 style="margin-top:2rem;">Use Image as a Link</h3>
+  <p>Wrap the <code>&lt;img&gt;</code> tag inside an <code>&lt;a&gt;</code> tag to create a clickable image:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;a href="https://www.tpointtech.com/what-is-robotics"&gt;
+  &lt;img src="robot.jpg" height="100" width="100"&gt;
+&lt;/a&gt;
+  </pre>
+
+</div>
+
+</div>
+
+<!-- HTML Styles Section -->
+<div id="styles" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <!-- HTML Table Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Table</h2>
+  <p style="color:#888; font-size:0.9rem;">12 Mar 2025 | 4 min read</p>
+
+  <p>The HTML <code>&lt;table&gt;</code> tag is used to display data in a tabular format (rows × columns). Each row is defined by the <code>&lt;tr&gt;</code> tag, headers by <code>&lt;th&gt;</code>, and data cells by <code>&lt;td&gt;</code>.</p>
+
+  <h3>Basic Table Example</h3>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;table&gt;
+  &lt;tr&gt;&lt;th&gt;First_Name&lt;/th&gt;&lt;th&gt;Last_Name&lt;/th&gt;&lt;th&gt;Marks&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Sonoo&lt;/td&gt;&lt;td&gt;Jaiswal&lt;/td&gt;&lt;td&gt;60&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;James&lt;/td&gt;&lt;td&gt;William&lt;/td&gt;&lt;td&gt;80&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Swati&lt;/td&gt;&lt;td&gt;Sironi&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+  </pre>
+
+  <h3>HTML Table Tags Summary</h3>
+  <ul style="margin-left:1.5rem;">
+    <li><code>&lt;table&gt;</code>: Defines a table.</li>
+    <li><code>&lt;tr&gt;</code>: Table row.</li>
+    <li><code>&lt;th&gt;</code>: Table header cell.</li>
+    <li><code>&lt;td&gt;</code>: Table data cell.</li>
+    <li><code>&lt;caption&gt;</code>: Table caption/title.</li>
+    <li><code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tfoot&gt;</code>: Groups table sections.</li>
+    <li><code>&lt;col&gt;</code>, <code>&lt;colgroup&gt;</code>: For column styling.</li>
+  </ul>
+
+  <h3>Adding Borders with CSS</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;style&gt;
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+&lt;/style&gt;
+  </pre>
+
+  <h3>Adding Padding</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;style&gt;
+  th, td {
+    padding: 10px;
+  }
+&lt;/style&gt;
+  </pre>
+
+  <h3>Setting Table Width</h3>
+  <p>Specify width in <code>px</code> or <code>%</code> using CSS:</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+table {
+  width: 100%;
+}
+  </pre>
+
+  <h3>Colspan Example</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Name&lt;/th&gt;
+    &lt;th colspan="2"&gt;Mobile No.&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ajeet&lt;/td&gt;
+    &lt;td&gt;123456&lt;/td&gt;
+    &lt;td&gt;789012&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+  </pre>
+
+  <h3>Rowspan Example</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;table&gt;
+  &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;td&gt;Ajeet&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;th rowspan="2"&gt;Mobile&lt;/th&gt;&lt;td&gt;123456&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;789012&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+  </pre>
+
+  <h3>Table with Caption</h3>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;table&gt;
+  &lt;caption&gt;Student Records&lt;/caption&gt;
+  &lt;tr&gt;&lt;th&gt;First Name&lt;/th&gt;&lt;th&gt;Last Name&lt;/th&gt;&lt;th&gt;Marks&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Vimal&lt;/td&gt;&lt;td&gt;Jaiswal&lt;/td&gt;&lt;td&gt;70&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+  </pre>
+
+  <h3>Alternate Row Styling</h3>
+  <p>Use <code>:nth-child()</code> selectors to style even and odd rows.</p>
+  <pre style="background-color:#f0f0f0; padding:1rem; border-radius:6px;">
+&lt;style&gt;
+  table#striped tr:nth-child(even) {
+    background-color: #eee;
+  }
+  table#striped tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  table#striped th {
+    background-color: gray;
+    color: white;
+  }
+&lt;/style&gt;
+  </pre>
+
+  <h3>Tip</h3>
+  <div style="background-color:#fff3cd; padding:1rem; border-radius:6px;">
+    <strong>Note:</strong> Use <code>div</code> and CSS for page layout instead of tables. Tables are best for data only.
+  </div>
+
+</div>
+
+</div>
+
+<!-- HTML Formatting Section -->
+<div id="formatting" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <!-- HTML Lists Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Lists</h2>
+  <p style="color:#888; font-size:0.9rem;">12 Mar 2025 | 2 min read</p>
+
+  <p>HTML lists are used to display items in a structured format. There are three types of lists in HTML:</p>
+
+  <ul style="margin-left:1.5rem;">
+    <li><strong>Ordered List</strong> - Displays items in numbered format using <code>&lt;ol&gt;</code></li>
+    <li><strong>Unordered List</strong> - Displays items in bullet format using <code>&lt;ul&gt;</code></li>
+    <li><strong>Description List</strong> - Displays terms and descriptions using <code>&lt;dl&gt;</code></li>
+  </ul>
+
+  <div style="margin-top:1rem; padding:1rem; background-color:#e7f3ff; border-left:5px solid #2196F3;">
+    <strong>Note:</strong> Lists can be nested (i.e., a list inside another list).
+  </div>
+
+  <h3>Ordered List</h3>
+  <p>An ordered list is created using the <code>&lt;ol&gt;</code> tag. Each list item starts with <code>&lt;li&gt;</code>.</p>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;ol&gt;
+  &lt;li&gt;Aries&lt;/li&gt;
+  &lt;li&gt;Bingo&lt;/li&gt;
+  &lt;li&gt;Leo&lt;/li&gt;
+  &lt;li&gt;Oracle&lt;/li&gt;
+&lt;/ol&gt;
+  </pre>
+
+  <h3>Unordered List</h3>
+  <p>An unordered list is created using the <code>&lt;ul&gt;</code> tag and shows bullet points by default.</p>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;ul&gt;
+  &lt;li&gt;Aries&lt;/li&gt;
+  &lt;li&gt;Bingo&lt;/li&gt;
+  &lt;li&gt;Leo&lt;/li&gt;
+  &lt;li&gt;Oracle&lt;/li&gt;
+&lt;/ul&gt;
+  </pre>
+
+  <h3>Description List</h3>
+  <p>This list type is perfect for dictionaries, glossaries, or name-value data. Use <code>&lt;dl&gt;</code>, <code>&lt;dt&gt;</code> (term), and <code>&lt;dd&gt;</code> (description).</p>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;dl&gt;
+  &lt;dt&gt;Aries&lt;/dt&gt;
+  &lt;dd&gt;- One of the 12 horoscope signs.&lt;/dd&gt;
+  &lt;dt&gt;Bingo&lt;/dt&gt;
+  &lt;dd&gt;- A fun evening snack.&lt;/dd&gt;
+  &lt;dt&gt;Leo&lt;/dt&gt;
+  &lt;dd&gt;- Another zodiac sign.&lt;/dd&gt;
+  &lt;dt&gt;Oracle&lt;/dt&gt;
+  &lt;dd&gt;- A multinational tech corporation.&lt;/dd&gt;
+&lt;/dl&gt;
+  </pre>
+
+  <h3>Nested List</h3>
+  <p>Lists can be nested inside each other. Here's an example combining an ordered list with nested unordered lists:</p>
+  <pre style="background-color:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;ol&gt;
+  &lt;li&gt;Delhi
+    &lt;ul&gt;
+      &lt;li&gt;New Delhi&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Haryana
+    &lt;ul&gt;
+      &lt;li&gt;Chandigarh&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Gujarat
+    &lt;ul&gt;
+      &lt;li&gt;Gandhinagar&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+  </pre>
+
+  <div style="background-color:#fff3cd; padding:1rem; border-radius:6px; margin-top:1rem;">
+    <strong>Tip:</strong> Use CSS to customize list styles using properties like <code>list-style-type</code>, <code>padding</code>, and <code>margin</code>.
+  </div>
+
+</div>
+
+</div>
+
+<!-- HTML Quotations Section -->
+<div id="quotations" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+  <!-- HTML Forms Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Forms</h2>
+  <p style="color:#888; font-size:0.9rem;">12 Mar 2025 | 4 min read</p>
+
+  <p>HTML forms are used to collect user input and send it to a server for processing. Forms are a crucial part of interactive websites.</p>
+
+  <h3>The &lt;form&gt; Element</h3>
+  <p>The <code>&lt;form&gt;</code> tag wraps all form elements:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;form&gt;
+  ...form elements...
+&lt;/form&gt;
+  </pre>
+
+  <h3>The &lt;input&gt; Element</h3>
+  <p><code>&lt;input&gt;</code> is the most commonly used form element. Its <code>type</code> attribute controls its behavior.</p>
+
+  <table style="border-collapse: collapse; width:100%; margin: 1rem 0;">
+    <tr style="background-color: #f1f1f1;">
+      <th style="padding: 8px; border: 1px solid #ccc;">Type</th>
+      <th style="padding: 8px; border: 1px solid #ccc;">Description</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ccc;">text</td>
+      <td style="padding: 8px; border: 1px solid #ccc;">Single-line text input field</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ccc;">radio</td>
+      <td style="padding: 8px; border: 1px solid #ccc;">Select one option</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ccc;">checkbox</td>
+      <td style="padding: 8px; border: 1px solid #ccc;">Select zero or more options</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ccc;">submit</td>
+      <td style="padding: 8px; border: 1px solid #ccc;">Submit form data</td>
+    </tr>
+  </table>
+
+  <h3>Text Fields</h3>
+  <p>Used for inputting text:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;form&gt;
+  &lt;label for="fname"&gt;First name:&lt;/label&gt;&lt;br&gt;
+  &lt;input type="text" id="fname" name="fname"&gt;&lt;br&gt;
+  &lt;label for="lname"&gt;Last name:&lt;/label&gt;&lt;br&gt;
+  &lt;input type="text" id="lname" name="lname"&gt;
+&lt;/form&gt;
+  </pre>
+
+  <h3>The &lt;label&gt; Element</h3>
+  <p><code>&lt;label&gt;</code> improves accessibility and makes forms more user-friendly. Use the <code>for</code> attribute to link it with an <code>input</code> by its <code>id</code>.</p>
+
+  <h3>Radio Buttons</h3>
+  <p>Let the user pick only one option from a set:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;form&gt;
+  &lt;input type="radio" id="html" name="fav_language" value="HTML"&gt;
+  &lt;label for="html"&gt;HTML&lt;/label&gt;&lt;br&gt;
+
+  &lt;input type="radio" id="css" name="fav_language" value="CSS"&gt;
+  &lt;label for="css"&gt;CSS&lt;/label&gt;&lt;br&gt;
+
+  &lt;input type="radio" id="js" name="fav_language" value="JavaScript"&gt;
+  &lt;label for="js"&gt;JavaScript&lt;/label&gt;
+&lt;/form&gt;
+  </pre>
+
+  <h3>Checkboxes</h3>
+  <p>Used to allow selecting multiple options:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;form&gt;
+  &lt;input type="checkbox" id="bike" name="vehicle1" value="Bike"&gt;
+  &lt;label for="bike"&gt;I have a bike&lt;/label&gt;&lt;br&gt;
+
+  &lt;input type="checkbox" id="car" name="vehicle2" value="Car"&gt;
+  &lt;label for="car"&gt;I have a car&lt;/label&gt;&lt;br&gt;
+
+  &lt;input type="checkbox" id="boat" name="vehicle3" value="Boat"&gt;
+  &lt;label for="boat"&gt;I have a boat&lt;/label&gt;
+&lt;/form&gt;
+  </pre>
+
+  <h3>Submit Button</h3>
+  <p>Used to send the form data to the server:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;form action="/action_page.php"&gt;
+  &lt;label for="fname"&gt;First name:&lt;/label&gt;&lt;br&gt;
+  &lt;input type="text" id="fname" name="fname" value="John"&gt;&lt;br&gt;
+
+  &lt;label for="lname"&gt;Last name:&lt;/label&gt;&lt;br&gt;
+  &lt;input type="text" id="lname" name="lname" value="Doe"&gt;&lt;br&gt;&lt;br&gt;
+
+  &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;
+  </pre>
+
+  <h3>The name Attribute</h3>
+  <p>The <code>name</code> attribute is important — only inputs with this attribute will send data when submitted.</p>
+
+  <div style="background:#fff3cd; padding:1rem; border-left:4px solid #ffc107; margin-top:1rem;">
+    <strong>Warning:</strong> If <code>name</code> is missing in <code>&lt;input&gt;</code>, its value will not be sent to the server.
+  </div>
+
+</div>
+
+</div>
+
+<!-- HTML Comments Section -->
+<div id="comments" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+  <!-- HTML Iframes Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML Iframes</h2>
+  <p style="color:#888; font-size:0.9rem;">12 Mar 2025 | 4 min read</p>
+
+  <p>The <code>&lt;iframe&gt;</code> tag in HTML is used to embed another webpage within the current webpage. It creates a rectangular frame where another document can be displayed.</p>
+
+  <h3>Basic Syntax</h3>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="URL"&gt;&lt;/iframe&gt;
+  </pre>
+  <p>The <code>src</code> attribute specifies the URL of the page to embed.</p>
+
+  <h3>Set Width and Height</h3>
+  <p>You can control the size using either attributes or CSS.</p>
+
+  <h4>Example (Pixels)</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="https://www.tpointtech.com/" height="300" width="400"&gt;&lt;/iframe&gt;
+  </pre>
+
+  <h4>Example (Percentage)</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="https://www.tpointtech.com/" height="50%" width="70%"&gt;&lt;/iframe&gt;
+  </pre>
+
+  <h4>Example (CSS)</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="https://www.tpointtech.com/" style="height:300px; width:400px;"&gt;&lt;/iframe&gt;
+  </pre>
+
+  <h3>Removing the Border</h3>
+  <p>Use CSS to remove or style the border:</p>
+  <h4>No Border</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="https://www.tpointtech.com/" style="border:none;"&gt;&lt;/iframe&gt;
+  </pre>
+
+  <h4>Custom Border</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="https://www.tpointtech.com/" style="border:2px solid tomato;"&gt;&lt;/iframe&gt;
+  </pre>
+
+  <h3>Targeting an iframe with a Link</h3>
+  <p>You can link to an iframe by matching the link's <code>target</code> attribute with the iframe's <code>name</code> attribute:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe src="new.html" name="iframe_a" height="300" width="100%"&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href="https://www.tpointtech.com" target="iframe_a"&gt;JavaTpoint.com&lt;/a&gt;&lt;/p&gt;
+  </pre>
+
+  <h3>Embedding YouTube Videos</h3>
+  <p>You can embed videos directly from YouTube:</p>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;iframe width="550" height="315" 
+  src="https://www.youtube.com/embed/JHq3pL4cdy4" 
+  frameborder="0" 
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen style="padding:20px;"&gt;
+&lt;/iframe&gt;
+  </pre>
+
+  <h3>Attributes of &lt;iframe&gt;</h3>
+  <table style="border-collapse: collapse; width:100%; margin-top:1rem;">
+    <tr style="background-color:#f1f1f1;">
+      <th style="padding:8px; border:1px solid #ccc;">Attribute</th>
+      <th style="padding:8px; border:1px solid #ccc;">Description</th>
+    </tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">src</td><td style="padding:8px; border:1px solid #ccc;">Specifies the URL to embed</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">height</td><td style="padding:8px; border:1px solid #ccc;">Height in px or % (default: 150px)</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">width</td><td style="padding:8px; border:1px solid #ccc;">Width in px or % (default: 300px)</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">name</td><td style="padding:8px; border:1px solid #ccc;">Names the iframe (used with links)</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">allowfullscreen</td><td style="padding:8px; border:1px solid #ccc;">Enables fullscreen option</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">sandbox</td><td style="padding:8px; border:1px solid #ccc;">Applies extra restrictions (e.g., no forms, scripts)</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">allow-scripts</td><td style="padding:8px; border:1px solid #ccc;">Allows JavaScript inside iframe</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">allow-same-origin</td><td style="padding:8px; border:1px solid #ccc;">Treat content as same-origin</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">srcdoc</td><td style="padding:8px; border:1px solid #ccc;">Embed HTML content directly</td></tr>
+  </table>
+
+  <div style="background:#fff3cd; padding:1rem; border-left:4px solid #ffc107; margin-top:1rem;">
+    <strong>Note:</strong> <code>frameborder</code> and <code>scrolling</code> are not supported in HTML5.
+  </div>
+
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="colors" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+  <!-- HTML Marquee Tag Section -->
+<div style="margin-top:2rem; background-color:#fdfdfd; padding:1.5rem; border-radius:8px; border:1px solid #ddd;">
+
+  <h2 style="margin-bottom:0.5rem;">HTML &lt;marquee&gt; Tag</h2>
+  <p style="color:#888; font-size:0.9rem;">Last Updated: 17 Apr, 2025</p>
+
+  <p>The <code>&lt;marquee&gt;</code> tag is used to create a scrolling effect (text or images) on a webpage. Though it's <strong>deprecated in HTML5</strong>, it can still be useful in legacy projects or simple demos.</p>
+
+  <div style="background:#fff3cd; padding:1rem; border-left:4px solid #ffc107; margin-top:1rem;">
+    <strong>Note:</strong> The <code>&lt;marquee&gt;</code> tag is not supported in modern HTML5 standards. Use CSS animations for better practice.
+  </div>
+
+  <h3>Syntax</h3>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;marquee&gt;
+  Your scrolling content
+&lt;/marquee&gt;
+  </pre>
+
+  <h3>Attributes of &lt;marquee&gt;</h3>
+  <table style="border-collapse: collapse; width:100%; margin-top:1rem;">
+    <tr style="background-color:#f1f1f1;">
+      <th style="padding:8px; border:1px solid #ccc;">Attribute</th>
+      <th style="padding:8px; border:1px solid #ccc;">Values</th>
+      <th style="padding:8px; border:1px solid #ccc;">Description</th>
+    </tr>
+    <tr><td bgcolor="#fdfdfd" style="padding:8px; border:1px solid #ccc;">bgcolor</td><td>Color</td><td>Background color of the marquee</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">direction</td><td>left, right, up, down</td><td>Scrolling direction</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">loop</td><td>number</td><td>How many times to repeat the scroll (default: infinite)</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">height</td><td>px or %</td><td>Height of the marquee</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">width</td><td>px or %</td><td>Width of the marquee</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">hspace</td><td>px</td><td>Horizontal spacing around the marquee</td></tr>
+    <tr><td style="padding:8px; border:1px solid #ccc;">vspace</td><td>px</td><td>Vertical spacing around the marquee</td></tr>
+  </table>
+
+  <h3>JavaScript Methods</h3>
+  <ul style="padding-left:1rem;">
+    <li><code>start()</code> – Starts scrolling</li>
+    <li><code>stop()</code> – Stops scrolling</li>
+  </ul>
+
+  <h3>Event Handlers</h3>
+  <ul style="padding-left:1rem;">
+    <li><code>onstart</code> – Triggered when scrolling begins</li>
+    <li><code>onfinish</code> – Triggered after the final scroll</li>
+    <li><code>onbounce</code> – Triggered when content bounces (if behavior is 'alternate')</li>
+  </ul>
+
+  <h3>Examples</h3>
+
+  <h4>Example 1: Right to Left Scrolling</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;marquee bgcolor="green" direction="left"&gt;
+  GeeksforGeeks - A computer science portal for geeks
+&lt;/marquee&gt;
+  </pre>
+
+  <h4>Example 2: Bottom to Top Scrolling</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;marquee bgcolor="green" direction="up"&gt;
+  GeeksforGeeks - A computer science portal for geeks
+&lt;/marquee&gt;
+  </pre>
+
+  <h4>Example 3: Top to Bottom Scrolling</h4>
+  <pre style="background:#f8f8f8; padding:1rem; border-radius:6px;">
+&lt;marquee bgcolor="green" direction="down"&gt;
+  GeeksforGeeks - A computer science portal for geeks
+&lt;/marquee&gt;
+  </pre>
+
+  <div style="background:#e9f7ef; padding:1rem; border-left:4px solid #28a745; margin-top:1rem;">
+    <strong>Tip:</strong> For modern, accessible animation, prefer <code>@keyframes</code> and <code>CSS animation</code> instead of using &lt;marquee&gt;.
+  </div>
+
+</div>
+
+</div>
+
+
+   <script>
+  function showSection(sectionId, clickedElement) {
+    // Show only the clicked section
+    const sections = document.querySelectorAll('.main-section');
+    sections.forEach(sec => sec.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+
+    // Remove active class from all sidebar items
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
+    sidebarItems.forEach(item => item.classList.remove('active'));
+
+    // Add active class to the clicked one
+    clickedElement.classList.add('active');
+  }
+</script>
+
+
+  </main>
+</div>
+
+  <!-- Footer Start -->
+<footer id="footer" style="background-color: #181d38; width: 100%; margin-top: 5rem; color: #F0FBFC; font-family: 'Nunito', sans-serif; ">
+<div  style="background-color: #181d38; width: 100%;  margin-top: 5rem; color: #F0FBFC; font-family: 'Nunito', sans-serif; padding-top: 4rem; margin-top: 5rem;">
+  <div style="max-width: 1200px; margin: auto; padding: 3rem 1rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      
+      <!-- Quick Link -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Quick Link</h4>
+        <a href="/about" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>About Us
+        </a>
+        <a href="/contact" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Contact Us
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Privacy Policy
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Terms & Conditions
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>FAQs & Help
+        </a>
+      </div>
+
+      <!-- Contact -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Contact</h4>
+        <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>123 Street, New York, USA</p>
+        <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i>+012 345 67890</p>
+        <p><i class="fas fa-envelope" style="margin-right: 10px;"></i>info@example.com</p>
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Gallery</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+          <img src="/static/images/course-1.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-2.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-3.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-2.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-3.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-1.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Newsletter</h4>
+        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+        <div style="position: relative; max-width: 400px;">
+          <input type="text" placeholder="Your email"
+            style="width: 100%; padding: 15px 50px 15px 15px; border: none; border-radius: 5px;">
+          <button type="button"
+            style="position: absolute; top: 5px; right: 5px; padding: 10px 15px; background-color: #06BBCC; color: white; border: none; border-radius: 5px;">
+            SignUp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 25px 1rem; text-align: center; font-size: 15px;">
+    &copy; <a href="#" style="color: #F0FBFC; text-decoration: underline;">Your Site Name</a>, All Right Reserved.
+    <br>Designed By <a href="https://htmlcodex.com" style="color: #F0FBFC; text-decoration: underline;">HTML Codex</a>
+    <br>Distributed By <a href="https://themewagon.com" style="color: #F0FBFC; text-decoration: underline;">ThemeWagon</a>
+    <div style="margin-top: 10px;">
+      <a href="/" style="margin-right: 15px; color: #F0FBFC;">Home</a>
+      <a href="#" style="margin-right: 15px; color: #F0FBFC;">Cookies</a>
+      <a href="#" style="margin-right: 15px; color: #F0FBFC;">Help</a>
+      <a href="#" style="color: #F0FBFC;">FAQs</a>
+    </div>
+  </div>
+</div>
+</footer>
+<!-- Footer End -->
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const footer = document.getElementById('footer');
+
+  function checkSidebar() {
+    const sidebarBottom = sidebar.offsetTop + sidebar.offsetHeight;
+    const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+    const scrollY = window.scrollY + window.innerHeight;
+
+    if (scrollY >= footerTop) {
+      sidebar.style.position = 'absolute';
+      sidebar.style.top = (footerTop - sidebar.offsetHeight) + 'px';
+    } else {
+      sidebar.style.position = 'fixed';
+      sidebar.style.top = '80px';
+    }
+  }
+
+  window.addEventListener('scroll', checkSidebar);
+  window.addEventListener('resize', checkSidebar);
+  window.addEventListener('load', checkSidebar);
+</script>
+<script>
+  const sections = document.querySelectorAll('.main-section');
+  let currentIndex = 0;
+
+  function showSectionByIndex(index) {
+    sections.forEach((section, i) => {
+      section.style.display = i === index ? 'block' : 'none';
+    });
+
+    const navDiv = sections[index].querySelector('div[style*="justify-content:space-between"]');
+    if (navDiv) {
+      navDiv.innerHTML = ''; // Clear old buttons
+
+      if (index === 0) {
+        // First section
+        navDiv.innerHTML = `
+          <button onclick="goToHome()" style="${btnStyle}">&lt; Home</button>
+          <button onclick="goNext()" style="${btnStyle}">Next &gt;</button>
+        `;
+      } else if (index === sections.length - 1) {
+        // Last section
+        navDiv.innerHTML = `
+          <button onclick="goToHome()" style="${btnStyle}">&lt; Home</button>
+          <button onclick="goPrevious()" style="${btnStyle}">Previous &lt;</button>
+        `;
+      } else {
+        // Middle sections
+        navDiv.innerHTML = `
+          <button onclick="goPrevious()" style="${btnStyle}">Previous &lt;</button>
+          <button onclick="goNext()" style="${btnStyle}">Next &gt;</button>
+        `;
+      }
+    }
+  }
+
+  const btnStyle = "padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;";
+
+  function goNext() {
+    if (currentIndex < sections.length - 1) {
+      currentIndex++;
+      showSectionByIndex(currentIndex);
+    }
+  }
+
+  function goPrevious() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showSectionByIndex(currentIndex);
+    }
+  }
+
+  function goToHome() {
+    currentIndex = 0;
+    showSectionByIndex(currentIndex);
+  }
+
+  // Initialize view
+  showSectionByIndex(0);
+</script>
+
+
+</body>
+</html>

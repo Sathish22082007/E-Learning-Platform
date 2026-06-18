@@ -1,0 +1,116 @@
+<!-- templates/view_customers.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #eef2f3;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #343a40;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        select, button {
+            padding: 8px;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Customer List</h2>
+        <form method="get">
+            <label for="month">Filter by month:</label>
+            <select name="month" id="month">
+                <option value="">-- All --</option>
+                {% for i in 1|add:""|rjust:2|make_list %}
+                    <option value="{{ forloop.counter }}" {% if request.GET.month == forloop.counter|stringformat:"s" %}selected{% endif %}>
+                        {{ forloop.counter }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in customers %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>{{ c.phone }}</td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.date_added }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align:center;">No customers found for this month.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="back-link">
+            <a href="{% url 'add_customer' %}">Add New Customer</a>
+        </div>
+    </div>
+</body>
+</html>

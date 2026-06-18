@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS Tutorial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  .sidebar-item {
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .sidebar-item.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .sidebar-item:hover {
+    background-color: #ddd;
+  }
+  
+</style>
+</head>
+<body style="margin:0; font-family:Segoe UI, sans-serif;">
+
+<!-- Navbar -->
+<div class="navigation-wrap start-header start-style">
+  <div class="nav-inner">
+    <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto py-4 py-md-0">
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/courses">Courses</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+
+      <div id="switch" class="ml-3 my-auto">
+        <div id="circle"></div>
+      </div>
+
+      {% if request.session.loggedin %}
+      <div class="dropdown ml-3 my-auto">
+        <button class="btn btn-light d-flex align-items-center dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 10px;">
+          <span style="font-weight: 500;">{{ request.session.username }}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="{{ request.session.dashboard }}">
+            <i class="fas fa-tachometer-alt mr-2 text-primary"></i> Dashboard
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/adminlogout">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div id="auth-buttons" class="ml-3 my-auto" style="display: flex; gap: 8px;">
+        <a href="/admin" class="btn btn-primary" style="padding: 6px 16px;">Login</a>
+        <a href="/register" class="btn btn-outline-primary ml-2" style="padding: 6px 16px;">Register</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="/static/script.js"></script>
+
+  <div style="display:flex; margin-top:80px;">
+
+<!-- Sidebar -->
+<aside id="sidebar" style="position:fixed; top:80px; left:0; width:240px; height:calc(100vh - 80px); background-color:#f1f1f1; overflow-y:auto; padding:1rem; border-right:1px solid #ccc; z-index:999;">
+  <!-- Sidebar content -->
+  <h2 style="margin-bottom:1rem;">CSS Tutorial</h2>
+  <div id="sidebar" style="display:flex; flex-direction:column; gap:5px;">
+    <div class="sidebar-item active" onclick="showSection('intro', this)">Css Introduction</div>
+    <div class="sidebar-item" onclick="showSection('editor', this)">Css Selector</div>
+    <div class="sidebar-item" onclick="showSection('basic', this)">How To Add Css</div>
+    <div class="sidebar-item" onclick="showSection('elements', this)">css Background</div>
+    <div class="sidebar-item" onclick="showSection('attributes', this)">css Border</div>
+    <div class="sidebar-item" onclick="showSection('headings', this)"> css radius</div>
+    <div class="sidebar-item" onclick="showSection('paragraphs', this)">css spacing </div>
+    <div class="sidebar-item" onclick="showSection('styles', this)">css display</div>
+    <div class="sidebar-item" onclick="showSection('formatting', this)">css buttons</div>
+    <div class="sidebar-item" onclick="showSection('quotations', this)">css float and font</div>
+    <div class="sidebar-item" onclick="showSection('comments', this)">css colors</div>
+    <div class="sidebar-item" onclick="showSection('colors', this)">css css margin and overflow</div>
+    <div class="sidebar-item" onclick="showSection('padding', this)">css padding and position</div>
+    <div class="sidebar-item" onclick="showSection('outline', this)">css outline and visibility</div>
+    <div class="sidebar-item" onclick="showSection('counter', this)">css counter and Icons</div>
+ 
+  </div>
+</aside>
+
+
+<!-- Main Content -->
+  <main style="margin-left:240px; margin-left: 240px; padding: 2rem; padding:2rem; width: 100%;">
+    <!-- HTML HOME -->
+    <div id="intro" class="main-section">
+<!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Home</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+
+      <!-- Intro Section -->
+      <div style="background-color:#dff1e6; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+        <h1 style="margin-bottom:1rem;">Learn CSS</h1>
+        <p>CSS is used to apply styles.</p>
+        <p>CSS stands for Cascading Style Sheets.</p>
+        <p>It works with HTML to make websites beautiful and user-friendly.</p>
+        <button style="margin-top:1rem; background-color:#007bff; color:white; padding:10px 20px; font-size:1rem; border:none; border-radius:6px; cursor:pointer;">Start learning CSS now »</button>
+      </div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Introduction</h2>
+  <p>CSS is the language we use to style a Web page.</p>
+
+  <h3 style="margin-top:20px;">What is CSS?</h3>
+  <ul style="margin-left:20px;">
+    <li>CSS stands for <strong>Cascading Style Sheets</strong></li>
+    <li>CSS describes how HTML elements are to be displayed on screen, paper, or in other media</li>
+    <li>CSS saves a lot of work. It can control the layout of multiple web pages all at once</li>
+    <li>External stylesheets are stored in CSS files</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Why Use CSS?</h3>
+  <p>CSS is used to define styles for your web pages, including the design, layout, and variations in display for different devices and screen sizes.</p>
+
+  <h3 style="margin-top:20px;">CSS Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">CSS Solved a Big Problem</h3>
+  <p>HTML was NEVER intended to contain tags for formatting a web page!</p>
+  <p>HTML was created to describe the content of a web page, like:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;h1&gt;This is a heading&lt;/h1&gt;
+
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+  </pre>
+
+  <p>When tags like <code>&lt;font&gt;</code> and color attributes were added to the HTML 3.2 specification, it started a nightmare for web developers.</p>
+  <p>Development of large websites, where fonts and color information were added to every single page, became a long and expensive process.</p>
+  <p>To solve this problem, the World Wide Web Consortium (W3C) created CSS.</p>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:20px 0;">
+    <strong>Note:</strong> CSS removed the style formatting from the HTML page!
+  </div>
+
+  <p>If you don't know what HTML is, we suggest that you read our HTML Tutorial.</p>
+
+  <h3 style="margin-top:20px;">CSS Saves a Lot of Work!</h3>
+  <p>The style definitions are normally saved in external <code>.css</code> files.</p>
+  <p>With an external stylesheet file, you can change the look of an entire website by changing just one file!</p>
+</div>
+
+
+
+</div>
+
+    <!-- HTML Editors Section -->
+     
+<div id="editor" class="main-section" style="display:none;">
+  <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Selectors</h2>
+  <p>A CSS selector selects the HTML element(s) you want to style.</p>
+
+  <h3 style="margin-top:20px;">CSS Selectors</h3>
+  <p>CSS selectors are used to "find" (or select) the HTML elements you want to style.</p>
+  <p>We can divide CSS selectors into five categories:</p>
+  <ul style="margin-left:20px;">
+    <li>Simple selectors (select elements based on name, id, class)</li>
+    <li>Combinator selectors (select elements based on a specific relationship between them)</li>
+    <li>Pseudo-class selectors (select elements based on a certain state)</li>
+    <li>Pseudo-elements selectors (select and style a part of an element)</li>
+    <li>Attribute selectors (select elements based on an attribute or attribute value)</li>
+  </ul>
+  <p>This page will explain the most basic CSS selectors.</p>
+
+  <h3 style="margin-top:20px;">The CSS <code>element</code> Selector</h3>
+  <p>The element selector selects HTML elements based on the element name.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  text-align: center;
+  color: red;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">The CSS <code>id</code> Selector</h3>
+  <p>The id selector uses the <code>id</code> attribute of an HTML element to select a specific element.</p>
+  <p>The id of an element is unique within a page, so the id selector is used to select one unique element!</p>
+  <p>To select an element with a specific id, write a hash (<code>#</code>) character, followed by the id of the element.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+#para1 {
+  text-align: center;
+  color: red;
+}
+  </pre>
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:20px 0;">
+    <strong>Note:</strong> An id name cannot start with a number!
+  </div>
+
+  <h3 style="margin-top:20px;">The CSS <code>class</code> Selector</h3>
+  <p>The class selector selects HTML elements with a specific class attribute.</p>
+  <p>To select elements with a specific class, write a period (<code>.</code>) character, followed by the class name.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+.center {
+  text-align: center;
+  color: red;
+}
+  </pre>
+
+  <p>You can also specify that only specific HTML elements should be affected by a class.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p.center {
+  text-align: center;
+  color: red;
+}
+  </pre>
+
+  <p>HTML elements can also refer to more than one class.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;p class="center large"&gt;This paragraph refers to two classes.&lt;/p&gt;
+  </pre>
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:20px 0;">
+    <strong>Note:</strong> A class name cannot start with a number!
+  </div>
+
+  <h3 style="margin-top:20px;">The CSS <code>Universal</code> Selector</h3>
+  <p>The universal selector (<code>*</code>) selects all HTML elements on the page.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+* {
+  text-align: center;
+  color: blue;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">The CSS <code>Grouping</code> Selector</h3>
+  <p>The grouping selector selects all the HTML elements with the same style definitions.</p>
+  <p>Look at the following CSS code (the h1, h2, and p elements have the same style definitions):</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+h1 {
+  text-align: center;
+  color: red;
+}
+
+h2 {
+  text-align: center;
+  color: red;
+}
+
+p {
+  text-align: center;
+  color: red;
+}
+  </pre>
+  <p>It will be better to group the selectors, to minimize the code.</p>
+  <p>To group selectors, separate each selector with a comma.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+h1, h2, p {
+  text-align: center;
+  color: red;
+}
+  </pre>
+</div>
+
+
+</div>
+
+<!-- HTML Basic Section -->
+<div id="basic" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">How To Add CSS</h2>
+  <p>When a browser reads a style sheet, it will format the HTML document according to the information in the style sheet.</p>
+
+  <h3 style="margin-top:20px;">Three Ways to Insert CSS</h3>
+  <ul style="margin-left:20px;">
+    <li>External CSS</li>
+    <li>Internal CSS</li>
+    <li>Inline CSS</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">External CSS</h3>
+  <p>With an external style sheet, you can change the look of an entire website by changing just one file!</p>
+  <p>Each HTML page must include a reference to the external style sheet file inside the <code>&lt;link&gt;</code> element, inside the <code>&lt;head&gt;</code> section.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="mystyle.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;This is a heading&lt;/h1&gt;
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <p>An external style sheet can be written in any text editor, and must be saved with a <code>.css</code> extension.</p>
+  <p>The external .css file should not contain any HTML tags.</p>
+
+  <p><b>"mystyle.css"</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: navy;
+  margin-left: 20px;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:20px 0;">
+    <strong>Note:</strong> Do not add a space between the property value and the unit (e.g., <code>20px</code>).<br>
+    <b>Incorrect:</b> <code>margin-left: 20 px;</code><br>
+    <b>Correct:</b> <code>margin-left: 20px;</code>
+  </div>
+
+  <h3 style="margin-top:20px;">Internal CSS</h3>
+  <p>An internal style sheet may be used if one single HTML page has a unique style.</p>
+  <p>The internal style is defined inside the <code>&lt;style&gt;</code> element, inside the <code>&lt;head&gt;</code> section.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+    body {
+      background-color: linen;
+    }
+
+    h1 {
+      color: maroon;
+      margin-left: 40px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;This is a heading&lt;/h1&gt;
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <h3 style="margin-top:20px;">Inline CSS</h3>
+  <p>An inline style may be used to apply a unique style for a single element.</p>
+  <p>To use inline styles, add the <code>style</code> attribute to the relevant element. The style attribute can contain any CSS property.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 style="color:blue;text-align:center;"&gt;This is a heading&lt;/h1&gt;
+&lt;p style="color:red;"&gt;This is a paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:20px 0;">
+    <strong>Tip:</strong> Inline styles mix content with presentation and lose many advantages of CSS. Use them sparingly.
+  </div>
+
+  <h3 style="margin-top:20px;">Multiple Style Sheets</h3>
+  <p>If some properties have been defined for the same selector in different style sheets, the value from the last read sheet will be used.</p>
+
+  <p><b>Assume external CSS:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+h1 {
+  color: navy;
+}
+  </pre>
+
+  <p><b>Then internal CSS:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+h1 {
+  color: orange;
+}
+  </pre>
+
+  <p><b>If internal CSS is after the external link:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="mystyle.css"&gt;
+  &lt;style&gt;
+    h1 { color: orange; }
+  &lt;/style&gt;
+&lt;/head&gt;
+  </pre>
+  <p><b>Then h1 color = orange</b></p>
+
+  <p><b>If internal CSS is before the external link:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;head&gt;
+  &lt;style&gt;
+    h1 { color: orange; }
+  &lt;/style&gt;
+  &lt;link rel="stylesheet" href="mystyle.css"&gt;
+&lt;/head&gt;
+  </pre>
+  <p><b>Then h1 color = navy</b></p>
+
+  <h3 style="margin-top:20px;">Cascading Order</h3>
+  <p>What style will be used when multiple styles are applied to the same element?</p>
+  <p>Styles "cascade" by the following priority order (from highest to lowest):</p>
+  <ol style="margin-left:20px;">
+    <li>Inline style (inside an HTML element)</li>
+    <li>External and internal style sheets (in the &lt;head&gt; section)</li>
+    <li>Browser default</li>
+  </ol>
+  <p>✅ Inline style always overrides external and internal styles.</p>
+</div>
+
+
+</div>
+
+<!-- HTML Elements Section -->
+<div id="elements" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Background</h2>
+  <p><em>26 Mar 2025 | 2 min read</em></p>
+  <p>The <strong>CSS background</strong> property is used to define background effects on elements. There are 5 background properties that affect HTML elements:</p>
+
+  <ul style="margin-left:20px;">
+    <li><code>background-color</code></li>
+    <li><code>background-image</code></li>
+    <li><code>background-repeat</code></li>
+    <li><code>background-attachment</code></li>
+    <li><code>background-position</code></li>
+  </ul>
+
+  <h3 style="margin-top:20px;">1) CSS <code>background-color</code></h3>
+  <p>This property is used to specify the background color of an element.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;style&gt;
+h2, p {
+  background-color: #b0d4de;
+}
+&lt;/style&gt;
+  </pre>
+
+  <p><b>Output:</b></p>
+  <div style="background-color:#b0d4de; padding:10px; border-radius:6px; margin-bottom:10px;">
+    <h2 style="margin:0;">My first CSS page.</h2>
+    <p style="margin:0;">Hello Javatpoint. This is an example of CSS background-color.</p>
+  </div>
+
+  <h3 style="margin-top:20px;">2) CSS <code>background-image</code></h3>
+  <p>This property sets an image as a background of an element.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;style&gt;
+body {
+  background-image: url("paper1.gif");
+  margin-left: 100px;
+}
+&lt;/style&gt;
+  </pre>
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin:20px 0;">
+    <strong>Note:</strong> Choose background images that contrast well with the text for better readability.
+  </div>
+
+  <h3 style="margin-top:20px;">3) CSS <code>background-repeat</code></h3>
+  <p>By default, background images repeat both horizontally and vertically. You can control this behavior with <code>background-repeat</code>.</p>
+
+  <p><b>Repeat Horizontally:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+background-repeat: repeat-x;
+  </pre>
+
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;style&gt;
+body {
+  background-image: url("gradient_bg.png");
+  background-repeat: repeat-x;
+}
+&lt;/style&gt;
+  </pre>
+
+  <p><b>Repeat Vertically:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+background-repeat: repeat-y;
+  </pre>
+
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;style&gt;
+body {
+  background-image: url("gradient_bg.png");
+  background-repeat: repeat-y;
+}
+&lt;/style&gt;
+  </pre>
+
+  <h3 style="margin-top:20px;">4) CSS <code>background-attachment</code></h3>
+  <p>This property specifies whether the background image is fixed or scrolls with the rest of the page.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+background: white url('bbb.gif');
+background-repeat: no-repeat;
+background-attachment: fixed;
+  </pre>
+
+  <h3 style="margin-top:20px;">5) CSS <code>background-position</code></h3>
+  <p>This property defines the initial position of the background image. Default is top-left. Possible values:</p>
+  <ul style="margin-left:20px;">
+    <li><code>center</code></li>
+    <li><code>top</code></li>
+    <li><code>bottom</code></li>
+    <li><code>left</code></li>
+    <li><code>right</code></li>
+  </ul>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+background: white url('good-morning.jpg');
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center;
+  </pre>
+</div>
+
+
+</div>
+
+<!-- HTML Attributes Section -->
+<div id="attributes" class="main-section" style="display:none;">
+  <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Borders</h2>
+  <p>The <strong>CSS border</strong> property allows you to define a border around HTML elements. You can specify the border’s width, style, and color.</p>
+
+  <h3 style="margin-top:20px;">Border Properties</h3>
+  <p>CSS provides several border-related properties:</p>
+  <ul style="margin-left:20px;">
+    <li><code>border-style</code></li>
+    <li><code>border-width</code></li>
+    <li><code>border-color</code></li>
+    <li><code>border</code> (shorthand)</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">1) <code>border-style</code></h3>
+  <p>This property sets the style of the border. Possible values include:</p>
+  <ul style="margin-left:20px;">
+    <li><code>none</code></li>
+    <li><code>solid</code></li>
+    <li><code>dotted</code></li>
+    <li><code>dashed</code></li>
+    <li><code>double</code></li>
+    <li><code>groove</code></li>
+    <li><code>ridge</code></li>
+    <li><code>inset</code></li>
+    <li><code>outset</code></li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  border-style: solid;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">2) <code>border-width</code></h3>
+  <p>Defines the thickness of the border. It can be specified in units like <code>px</code>, <code>em</code>, or using keywords like <code>thin</code>, <code>medium</code>, <code>thick</code>.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  border-style: solid;
+  border-width: 2px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">3) <code>border-color</code></h3>
+  <p>Sets the color of the border. You can use named colors, hex, RGB, or HSL values.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  border-style: solid;
+  border-color: red;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">4) <code>border</code> (Shorthand)</h3>
+  <p>The <code>border</code> shorthand property lets you define all three border properties in one line.</p>
+  <p><b>Syntax:</b> <code>border: &lt;width&gt; &lt;style&gt; &lt;color&gt;;</code></p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  border: 2px dashed green;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Individual Borders</h3>
+  <p>You can style each side of the border individually using:</p>
+  <ul style="margin-left:20px;">
+    <li><code>border-top</code></li>
+    <li><code>border-right</code></li>
+    <li><code>border-bottom</code></li>
+    <li><code>border-left</code></li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  border-top: 2px solid blue;
+  border-right: 2px dashed red;
+  border-bottom: 2px dotted green;
+  border-left: 2px double orange;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Rounded Borders</h3>
+  <p>Use <code>border-radius</code> to create rounded corners.</p>
+  <p><b>Example:</b></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  border: 2px solid black;
+  border-radius: 10px;
+}
+  </pre>
+</div>
+
+
+</div>
+
+<!-- HTML Headings Section -->
+<div id="headings" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Border Radius</h2>
+  <p>The <code>border-radius</code> property in CSS is used to create rounded corners for elements. You can apply it to all corners at once, or target each corner individually.</p>
+
+  <h3 style="margin-top:20px;">Basic Syntax</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+element {
+  border-radius: value;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Example: All Corners Rounded</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  border: 2px solid #333;
+  border-radius: 15px;
+}
+  </pre>
+  <div style="border:2px solid #333; border-radius:15px; padding:10px; margin-top:10px; max-width:300px;">
+    Rounded corners with <code>border-radius: 15px</code>
+  </div>
+
+  <h3 style="margin-top:20px;">Different Radius for Each Corner</h3>
+  <p>You can also set each corner separately using:</p>
+  <ul style="margin-left:20px;">
+    <li><code>border-top-left-radius</code></li>
+    <li><code>border-top-right-radius</code></li>
+    <li><code>border-bottom-right-radius</code></li>
+    <li><code>border-bottom-left-radius</code></li>
+  </ul>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  border: 2px solid #333;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 5px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Circle and Oval Shapes</h3>
+  <p>Setting <code>border-radius: 50%</code> makes elements appear as circles or ovals (depending on width and height).</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  width: 100px;
+  height: 100px;
+  background-color: teal;
+  border-radius: 50%;
+}
+  </pre>
+  <div style="width:100px; height:100px; background-color:teal; border-radius:50%; margin-top:10px;"></div>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Use <code>border-radius</code> creatively to build cards, buttons, profile images, and even chat bubbles!
+  </div>
+</div>
+
+
+</div>
+
+<!-- HTML Paragraphs Section -->
+<div id="paragraphs" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Spacing</h2>
+  <p>CSS spacing refers to the space inside and outside elements. You can control spacing using two main properties:</p>
+  <ul style="margin-left:20px;">
+    <li><strong><code>margin</code></strong> – controls space outside the element</li>
+    <li><strong><code>padding</code></strong> – controls space inside the element</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">1) <code>margin</code></h3>
+  <p>The <code>margin</code> property adds space around an element, outside of its border.</p>
+
+  <p><strong>Example:</strong></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  margin: 20px;
+}
+  </pre>
+  <p>This applies 20px of space on all four sides.</p>
+
+  <h4 style="margin-top:15px;">Individual Margins</h4>
+  <ul style="margin-left:20px;">
+    <li><code>margin-top</code></li>
+    <li><code>margin-right</code></li>
+    <li><code>margin-bottom</code></li>
+    <li><code>margin-left</code></li>
+  </ul>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  margin-top: 10px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  margin-left: 25px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">2) <code>padding</code></h3>
+  <p>The <code>padding</code> property adds space between the content and the border of an element.</p>
+
+  <p><strong>Example:</strong></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  padding: 20px;
+}
+  </pre>
+  <p>This adds 20px space inside the element on all sides.</p>
+
+  <h4 style="margin-top:15px;">Individual Padding</h4>
+  <ul style="margin-left:20px;">
+    <li><code>padding-top</code></li>
+    <li><code>padding-right</code></li>
+    <li><code>padding-bottom</code></li>
+    <li><code>padding-left</code></li>
+  </ul>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  padding-top: 10px;
+  padding-right: 15px;
+  padding-bottom: 20px;
+  padding-left: 25px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">3) Shorthand Syntax</h3>
+  <p>You can use one line to define spacing for all four sides:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+/* top | right | bottom | left */
+margin: 10px 20px 30px 40px;
+padding: 5px 10px 5px 10px;
+  </pre>
+
+  <h3 style="margin-top:20px;">4) Auto Margin (Centering)</h3>
+  <p>Use <code>margin: auto;</code> to horizontally center a block element (like a div):</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  width: 300px;
+  margin: auto;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Padding affects the inside space of an element. Margin affects the outside space between elements.
+  </div>
+</div>
+
+</div>
+
+<!-- HTML Styles Section -->
+<div id="styles" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Display</h2>
+  <p>The <code>display</code> property in CSS determines how an element is displayed on the page. It's one of the most important layout-related properties.</p>
+
+  <h3 style="margin-top:20px;">Common <code>display</code> Values</h3>
+  <ul style="margin-left:20px;">
+    <li><code>block</code> – The element takes up the full width available.</li>
+    <li><code>inline</code> – The element does not start on a new line and only takes up as much width as necessary.</li>
+    <li><code>inline-block</code> – Like inline, but allows setting width and height.</li>
+    <li><code>none</code> – Hides the element completely (it won’t be visible or take up space).</li>
+    <li><code>flex</code> – Makes the container a flexbox for layout purposes.</li>
+    <li><code>grid</code> – Makes the container a grid layout.</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">1) <code>display: block;</code></h3>
+  <p>Block elements start on a new line and stretch to full width.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  display: block;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">2) <code>display: inline;</code></h3>
+  <p>Inline elements do not start on a new line and only occupy as much width as needed.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+span {
+  display: inline;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">3) <code>display: inline-block;</code></h3>
+  <p>Inline-block elements behave like inline elements but allow setting width and height.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+button {
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">4) <code>display: none;</code></h3>
+  <p>This completely hides the element and removes it from the layout flow.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p.hidden {
+  display: none;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">5) <code>display: flex;</code></h3>
+  <p>Turns a container into a flexbox for aligning and distributing items in rows or columns.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">6) <code>display: grid;</code></h3>
+  <p>Turns a container into a grid layout. Useful for creating complex designs.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Note:</strong> Use <code>display: none;</code> to hide elements. Use <code>visibility: hidden;</code> to hide an element but keep its space.
+  </div>
+</div>
+
+</div>
+
+<!-- HTML Formatting Section -->
+<div id="formatting" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Buttons</h2>
+  <p>You can style HTML buttons using CSS to improve appearance and interactivity. You can modify background, color, padding, borders, hover effects, and more.</p>
+
+  <h3 style="margin-top:20px;">Basic Button Styling</h3>
+  <p><strong>Example:</strong></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+  </pre>
+  <button style="background-color:#4CAF50; color:white; padding:12px 24px; border:none; border-radius:6px; cursor:pointer; margin-top:10px;">
+    Click Me
+  </button>
+
+  <h3 style="margin-top:20px;">Hover Effect</h3>
+  <p>Add hover styles for interaction feedback:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+button:hover {
+  background-color: #45a049;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Outlined Button</h3>
+  <p><strong>Example:</strong></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+button {
+  background-color: white;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+  </pre>
+  <button style="background-color:white; color:#4CAF50; border:2px solid #4CAF50; padding:10px 20px; border-radius:6px; margin-top:10px;">
+    Outlined
+  </button>
+
+  <h3 style="margin-top:20px;">Disabled Button</h3>
+  <p>Style a disabled button using the <code>:disabled</code> pseudo-class:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+  </pre>
+  <button style="background-color:#ccc; color:#666; padding:10px 20px; border:none; border-radius:6px; cursor:not-allowed;" disabled>
+    Disabled
+  </button>
+
+  <h3 style="margin-top:20px;">Rounded & Large Button</h3>
+  <p><strong>Example:</strong></p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+button {
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 18px;
+}
+  </pre>
+  <button style="padding:16px 32px; border-radius:50px; font-size:18px; background-color:#007bff; color:white; border:none; margin-top:10px;">
+    Big & Rounded
+  </button>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> You can also use transitions, gradients, and shadows to make buttons more interactive and attractive.
+  </div>
+</div>
+
+
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="quotations" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial, sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Float</h2>
+  <p>The <code>float</code> property in CSS is used to position elements to the left or right, allowing text or inline elements to wrap around them.</p>
+
+  <h3 style="margin-top:20px;">Float Values</h3>
+  <ul style="margin-left:20px;">
+    <li><code>left</code> – Floats the element to the left</li>
+    <li><code>right</code> – Floats the element to the right</li>
+    <li><code>none</code> – Default, element does not float</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example: Image Floating</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+img {
+  float: right;
+  margin-left: 20px;
+}
+  </pre>
+  <p>You can float an image to the right and let text wrap around it.</p>
+
+  <h3 style="margin-top:20px;">Clear Property</h3>
+  <p>Use the <code>clear</code> property to stop an element from wrapping around floated elements.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+.clearfix {
+  clear: both;
+}
+  </pre>
+
+  <hr style="margin:30px 0; border:none; border-top:1px solid #ddd;">
+
+  <h2 style="color:#333;">CSS Font</h2>
+  <p>The <code>font</code> properties allow you to style the appearance of text, including font family, size, weight, style, and more.</p>
+
+  <h3 style="margin-top:20px;">Common Font Properties</h3>
+  <ul style="margin-left:20px;">
+    <li><code>font-family</code> – Sets the font type</li>
+    <li><code>font-size</code> – Sets the size of the font</li>
+    <li><code>font-weight</code> – Sets how bold the font is</li>
+    <li><code>font-style</code> – Sets italic, normal, or oblique</li>
+    <li><code>font-variant</code> – Small-caps, normal</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  font-family: 'Verdana', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Font Shorthand</h3>
+  <p>You can use shorthand to combine all font properties into a single line:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p {
+  font: italic small-caps bold 16px/1.5 'Georgia', serif;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Always include a fallback font in <code>font-family</code> (e.g., <code>Arial, sans-serif</code>) in case the first font is unavailable.
+  </div>
+</div>
+
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="comments" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Colors</h2>
+  <p>CSS allows you to set colors for text, backgrounds, borders, and more using the <code>color</code> and <code>background-color</code> properties.</p>
+
+  <h3 style="margin-top:20px;">Color Types</h3>
+  <ul style="margin-left:20px;">
+    <li><strong>Named Colors:</strong> <code>red</code>, <code>blue</code>, <code>green</code>, etc.</li>
+    <li><strong>Hex Values:</strong> <code>#ff0000</code>, <code>#00ff00</code></li>
+    <li><strong>RGB:</strong> <code>rgb(255, 0, 0)</code></li>
+    <li><strong>RGBA:</strong> <code>rgba(255, 0, 0, 0.5)</code></li>
+    <li><strong>HSL:</strong> <code>hsl(0, 100%, 50%)</code></li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  color: navy;
+}
+  </pre>
+
+  <div style="background-color:lightblue; padding:10px; border-radius:6px; margin-top:10px;">
+    <h4 style="color:navy; margin:0;">This is a heading</h4>
+    <p style="margin:0;">This is a sample background and text color.</p>
+  </div>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Use <code>rgba()</code> to add transparency to color.
+  </div>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="colors" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Margin</h2>
+  <p>The <code>margin</code> property creates space around elements, outside of any borders. It’s used to separate elements visually.</p>
+
+  <h3 style="margin-top:20px;">Set All Margins</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  margin: 20px;
+}
+  </pre>
+  <p>This sets 20px space on all four sides.</p>
+
+  <h3 style="margin-top:20px;">Individual Margins</h3>
+  <ul style="margin-left:20px;">
+    <li><code>margin-top</code></li>
+    <li><code>margin-right</code></li>
+    <li><code>margin-bottom</code></li>
+    <li><code>margin-left</code></li>
+  </ul>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  margin-top: 10px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  margin-left: 25px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Shorthand Margin</h3>
+  <p>Use one line to set all four margins:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+margin: 10px 20px 30px 40px;
+/* top right bottom left */
+  </pre>
+
+  <h3 style="margin-top:20px;">Auto Margin (Centering)</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  width: 300px;
+  margin: auto;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> <code>margin: auto;</code> is often used to center block elements horizontally.
+  </div>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Overflow</h2>
+  <p>The <code>overflow</code> property controls what happens to content that overflows an element's box.</p>
+
+  <h3 style="margin-top:20px;">Values</h3>
+  <ul style="margin-left:20px;">
+    <li><code>visible</code> – Default. Content is not clipped and may overflow.</li>
+    <li><code>hidden</code> – Overflow is clipped; the rest is hidden.</li>
+    <li><code>scroll</code> – Always adds scrollbars.</li>
+    <li><code>auto</code> – Adds scrollbars only if necessary.</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  width: 200px;
+  height: 100px;
+  overflow: auto;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Use <code>overflow-x</code> and <code>overflow-y</code> for horizontal and vertical control.
+  </div>
+</div>
+
+</div>
+<!-- HTML Colors Section -->
+<div id="padding" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Padding</h2>
+  <p>The <code>padding</code> property creates space inside the element, between the content and the border.</p>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  padding: 20px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Individual Padding</h3>
+  <ul style="margin-left:20px;">
+    <li><code>padding-top</code></li>
+    <li><code>padding-right</code></li>
+    <li><code>padding-bottom</code></li>
+    <li><code>padding-left</code></li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Shorthand Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+padding: 10px 20px 30px 40px;
+/* top right bottom left */
+  </pre>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Position</h2>
+  <p>The <code>position</code> property specifies how an element is positioned in a document.</p>
+
+  <h3 style="margin-top:20px;">Position Types</h3>
+  <ul style="margin-left:20px;">
+    <li><code>static</code> – Default positioning (normal flow)</li>
+    <li><code>relative</code> – Positioned relative to its normal position</li>
+    <li><code>absolute</code> – Positioned relative to the nearest positioned ancestor</li>
+    <li><code>fixed</code> – Positioned relative to the viewport</li>
+    <li><code>sticky</code> – Switches between relative and fixed based on scroll</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  position: absolute;
+  top: 50px;
+  left: 100px;
+}
+  </pre>
+</div>
+
+</div>
+<!-- HTML Colors Section -->
+<div id="outline" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Outline</h2>
+  <p>The <code>outline</code> property draws a line outside the element's border to highlight it without affecting layout.</p>
+
+  <h3 style="margin-top:20px;">Basic Outline</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  outline: 2px solid red;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Outline Offset</h3>
+  <p>Add space between the outline and border:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+div {
+  outline-offset: 5px;
+}
+  </pre>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Visibility</h2>
+  <p>The <code>visibility</code> property specifies whether an element is visible or hidden, but it still takes up space in the layout.</p>
+
+  <h3 style="margin-top:20px;">Values</h3>
+  <ul style="margin-left:20px;">
+    <li><code>visible</code> – Default (element is shown)</li>
+    <li><code>hidden</code> – Element is hidden, but space is preserved</li>
+    <li><code>collapse</code> – Used with table rows/columns</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p.hidden {
+  visibility: hidden;
+}
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Note:</strong> Unlike <code>display: none</code>, <code>visibility: hidden</code> keeps the element's space.
+  </div>
+</div>
+
+</div>
+<!-- HTML Colors Section -->
+<div id="counter" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Counters</h2>
+  <p>CSS counters are variables maintained by CSS to automatically number elements, like sections or list items.</p>
+
+  <h3 style="margin-top:20px;">How It Works</h3>
+  <ol style="margin-left:20px;">
+    <li>Initialize the counter using <code>counter-reset</code>.</li>
+    <li>Increment the counter using <code>counter-increment</code>.</li>
+    <li>Display the counter using <code>content: counter(name)</code> in <code>::before</code> or <code>::after</code>.</li>
+  </ol>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+body {
+  counter-reset: section;
+}
+
+h2::before {
+  counter-increment: section;
+  content: "Section " counter(section) ": ";
+}
+  </pre>
+  <p>This will number all <code>&lt;h2&gt;</code> headings as Section 1, Section 2, etc.</p>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Counters work best with pseudo-elements like <code>::before</code>.
+  </div>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+  <h2 style="color:#333;">CSS Icons</h2>
+  <p>You can add icons to your web page using CSS libraries like <strong>Font Awesome</strong>, or by using Unicode or SVG images.</p>
+
+  <h3 style="margin-top:20px;">Using Font Awesome</h3>
+  <p>First, include the Font Awesome CDN in your HTML:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"&gt;
+  </pre>
+
+  <p>Then use the icon class in an element:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;i class="fa fa-home"&gt;&lt;/i&gt; Home
+  </pre>
+
+  <h3 style="margin-top:20px;">Using Unicode</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+p::before {
+  content: "\2713"; /* Checkmark */
+  color: green;
+  margin-right: 5px;
+}
+  </pre>
+
+  <h3 style="margin-top:20px;">Using SVG</h3>
+  <p>You can also use inline SVGs for scalable, styleable icons.</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+&lt;svg width="24" height="24"&gt;
+  &lt;circle cx="12" cy="12" r="10" stroke="black" stroke-width="2" fill="blue" /&gt;
+&lt;/svg&gt;
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Font Awesome provides thousands of free icons with easy integration.
+  </div>
+</div>
+
+</div>
+
+   <script>
+  function showSection(sectionId, clickedElement) {
+    // Show only the clicked section
+    const sections = document.querySelectorAll('.main-section');
+    sections.forEach(sec => sec.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+
+    // Remove active class from all sidebar items
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
+    sidebarItems.forEach(item => item.classList.remove('active'));
+
+    // Add active class to the clicked one
+    clickedElement.classList.add('active');
+  }
+</script>
+
+
+  </main>
+</div>
+
+  <!-- Footer Start -->
+<footer id="footer" style="background-color: #181d38; width: 100%; margin-top: 5rem; color: #F0FBFC; font-family: 'Nunito', sans-serif; ">
+<div  style="background-color: #181d38; width: 100%;  margin-top: 5rem; color: #F0FBFC; font-family: 'Nunito', sans-serif; padding-top: 4rem; margin-top: 5rem;">
+  <div style="max-width: 1200px; margin: auto; padding: 3rem 1rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      
+      <!-- Quick Link -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Quick Link</h4>
+        <a href="/about" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>About Us
+        </a>
+        <a href="/contact" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Contact Us
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Privacy Policy
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Terms & Conditions
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>FAQs & Help
+        </a>
+      </div>
+
+      <!-- Contact -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Contact</h4>
+        <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>123 Street, New York, USA</p>
+        <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i>+012 345 67890</p>
+        <p><i class="fas fa-envelope" style="margin-right: 10px;"></i>info@example.com</p>
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Gallery</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+          <img src="/static/images/course-1.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-2.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-3.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-2.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-3.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-1.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Newsletter</h4>
+        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+        <div style="position: relative; max-width: 400px;">
+          <input type="text" placeholder="Your email"
+            style="width: 100%; padding: 15px 50px 15px 15px; border: none; border-radius: 5px;">
+          <button type="button"
+            style="position: absolute; top: 5px; right: 5px; padding: 10px 15px; background-color: #06BBCC; color: white; border: none; border-radius: 5px;">
+            SignUp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 25px 1rem; text-align: center; font-size: 15px;">
+    &copy; <a href="#" style="color: #F0FBFC; text-decoration: underline;">Your Site Name</a>, All Right Reserved.
+    <br>Designed By <a href="https://htmlcodex.com" style="color: #F0FBFC; text-decoration: underline;">HTML Codex</a>
+    <br>Distributed By <a href="https://themewagon.com" style="color: #F0FBFC; text-decoration: underline;">ThemeWagon</a>
+    <div style="margin-top: 10px;">
+      <a href="/" style="margin-right: 15px; color: #F0FBFC;">Home</a>
+      <a href="#" style="margin-right: 15px; color: #F0FBFC;">Cookies</a>
+      <a href="#" style="margin-right: 15px; color: #F0FBFC;">Help</a>
+      <a href="#" style="color: #F0FBFC;">FAQs</a>
+    </div>
+  </div>
+</div>
+</footer>
+<!-- Footer End -->
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const footer = document.getElementById('footer');
+
+  function checkSidebar() {
+    const sidebarBottom = sidebar.offsetTop + sidebar.offsetHeight;
+    const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+    const scrollY = window.scrollY + window.innerHeight;
+
+    if (scrollY >= footerTop) {
+      sidebar.style.position = 'absolute';
+      sidebar.style.top = (footerTop - sidebar.offsetHeight) + 'px';
+    } else {
+      sidebar.style.position = 'fixed';
+      sidebar.style.top = '80px';
+    }
+  }
+
+  window.addEventListener('scroll', checkSidebar);
+  window.addEventListener('resize', checkSidebar);
+  window.addEventListener('load', checkSidebar);
+</script>
+<script>
+  const sections = document.querySelectorAll('.main-section');
+  let currentIndex = 0;
+
+  function showSectionByIndex(index) {
+    sections.forEach((section, i) => {
+      section.style.display = i === index ? 'block' : 'none';
+    });
+
+    const navDiv = sections[index].querySelector('div[style*="justify-content:space-between"]');
+    if (navDiv) {
+      navDiv.innerHTML = ''; // Clear old buttons
+
+      if (index === 0) {
+        // First section
+        navDiv.innerHTML = `
+          <button onclick="goToHome()" style="${btnStyle}">&lt; Home</button>
+          <button onclick="goNext()" style="${btnStyle}">Next &gt;</button>
+        `;
+      } else if (index === sections.length - 1) {
+        // Last section
+        navDiv.innerHTML = `
+          <button onclick="goToHome()" style="${btnStyle}">&lt; Home</button>
+          <button onclick="goPrevious()" style="${btnStyle}">Previous &lt;</button>
+        `;
+      } else {
+        // Middle sections
+        navDiv.innerHTML = `
+          <button onclick="goPrevious()" style="${btnStyle}">Previous &lt;</button>
+          <button onclick="goNext()" style="${btnStyle}">Next &gt;</button>
+        `;
+      }
+    }
+  }
+
+  const btnStyle = "padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;";
+
+  function goNext() {
+    if (currentIndex < sections.length - 1) {
+      currentIndex++;
+      showSectionByIndex(currentIndex);
+    }
+  }
+
+  function goPrevious() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showSectionByIndex(currentIndex);
+    }
+  }
+
+  function goToHome() {
+    currentIndex = 0;
+    showSectionByIndex(currentIndex);
+  }
+
+  // Initialize view
+  showSectionByIndex(0);
+</script>
+
+
+</body>
+</html>

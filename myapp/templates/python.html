@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PYTHON Tutorial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  .sidebar-item {
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .sidebar-item.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .sidebar-item:hover {
+    background-color: #ddd;
+  }
+  
+</style>
+</head>
+<body style="margin:0; font-family:Segoe UI, sans-serif;">
+
+<!-- Navbar -->
+<div class="navigation-wrap start-header start-style">
+  <div class="nav-inner">
+    <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto py-4 py-md-0">
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/courses">Courses</a>
+        </li>
+        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+
+      <div id="switch" class="ml-3 my-auto">
+        <div id="circle"></div>
+      </div>
+
+      {% if request.session.loggedin %}
+      <div class="dropdown ml-3 my-auto">
+        <button class="btn btn-light d-flex align-items-center dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; margin-right: 10px;">
+          <span style="font-weight: 500;">{{ request.session.username }}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="profileDropdown">
+          <a class="dropdown-item" href="{{ request.session.dashboard }}">
+            <i class="fas fa-tachometer-alt mr-2 text-primary"></i> Dashboard
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/adminlogout">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div id="auth-buttons" class="ml-3 my-auto" style="display: flex; gap: 8px;">
+        <a href="/admin" class="btn btn-primary" style="padding: 6px 16px;">Login</a>
+        <a href="/register" class="btn btn-outline-primary ml-2" style="padding: 6px 16px;">Register</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="/static/script.js"></script>
+
+  <div style="display:flex; margin-top:80px;">
+
+<!-- Sidebar -->
+<aside id="sidebar" style="position:fixed; top:80px; left:0; width:240px; height:calc(100vh - 80px); background-color:#f1f1f1; overflow-y:auto; padding:1rem; border-right:1px solid #ccc; z-index:999;">
+  <!-- Sidebar content -->
+  <h2 style="margin-bottom:1rem;">PYTHON Tutorial</h2>
+  <div id="sidebar" style="display:flex; flex-direction:column; gap:5px;">
+    <div class="sidebar-item active" onclick="showSection('intro', this)">python Introduction</div>
+    <div class="sidebar-item" onclick="showSection('editor', this)">Comments</div>
+    <div class="sidebar-item" onclick="showSection('basic', this)">Data Types</div>
+    <div class="sidebar-item" onclick="showSection('elements', this)">Operators</div>
+    <div class="sidebar-item" onclick="showSection('attributes', this)">Conditional Statements</div>
+    <div class="sidebar-item" onclick="showSection('headings', this)">Loops Concept</div>
+    <div class="sidebar-item" onclick="showSection('paragraphs', this)">Input Output Operations</div>
+    <div class="sidebar-item" onclick="showSection('arrays', this)">Arrays</div>
+    <div class="sidebar-item" onclick="showSection('quotations', this)">2d Arrays</div>
+    <div class="sidebar-item" onclick="showSection('comments', this)">Functions</div>
+    <div class="sidebar-item" onclick="showSection('colors', this)">Class and Objects</div>
+    <div class="sidebar-item" onclick="showSection('inheritance', this)">Inheritance</div>
+    <div class="sidebar-item" onclick="showSection('polymorphism', this)">Polymorphism</div>
+    <div class="sidebar-item" onclick="showSection('constructor', this)">Constructor and Destructor</div>
+    <div class="sidebar-item" onclick="showSection('modifier', this)">Access Modifier</div>
+    <div class="sidebar-item" onclick="showSection('encapsulation', this)">Encapsulation</div>
+    <div class="sidebar-item" onclick="showSection('getters', this)">Getters and setters</div>
+  </div>
+</aside>
+
+
+<!-- Main Content -->
+  <main style="margin-left:240px; margin-left: 240px; padding: 2rem; padding:2rem; width: 100%;">
+    <!-- HTML HOME -->
+    <div id="intro" class="main-section">
+<!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Home</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+
+      <!-- Intro Section -->
+      <div style="background-color:#dff1e6; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+        <h1 style="margin-bottom:1rem;">Learn PYTHON</h1>
+        <p>Python emphasizes clean, readable syntax — often called "executable pseudocode". </p>
+        <p>Python was created by Guido van Rossum in the late 1980s and officially released in 1991. </p>
+        <p>Python is open-source and works on Windows, Mac, Linux, and more.</p>
+        <button style="margin-top:1rem; background-color:#007bff; color:white; padding:10px 20px; font-size:1rem; border:none; border-radius:6px; cursor:pointer;">Start learning PYTHON now »</button>
+      </div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+
+  <h2 style="color:#333;">What is Python?</h2>
+  <p>Python is a popular programming language. It was created by <strong>Guido van Rossum</strong> and released in <strong>1991</strong>.</p>
+
+  <p>It is used for:</p>
+  <ul style="margin-left:20px;">
+    <li>Web development (server-side)</li>
+    <li>Software development</li>
+    <li>Mathematics</li>
+    <li>System scripting</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">What can Python do?</h3>
+  <ul style="margin-left:20px;">
+    <li>Create web applications on a server</li>
+    <li>Automate workflows with software</li>
+    <li>Connect to database systems, read and modify files</li>
+    <li>Handle big data and complex math</li>
+    <li>Build prototypes or production software quickly</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Why Python?</h3>
+  <ul style="margin-left:20px;">
+    <li>Works on Windows, Mac, Linux, Raspberry Pi, etc.</li>
+    <li>Simple, English-like syntax</li>
+    <li>Shorter code compared to other languages</li>
+    <li>Interpreted language (run code as soon as it's written)</li>
+    <li>Supports procedural, OOP, and functional programming</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Good to Know</h3>
+  <p>The latest major version is <strong>Python 3</strong> (used in this tutorial).</p>
+  <p><strong>Python 2</strong> is still used but only receives security updates.</p>
+  <p>You can write Python in a basic text editor or in IDEs like Thonny, PyCharm, NetBeans, or Eclipse.</p>
+
+  <h3 style="margin-top:20px;">Python Syntax vs Other Languages</h3>
+  <ul style="margin-left:20px;">
+    <li>Python is designed for readability</li>
+    <li>Uses new lines instead of semicolons to end statements</li>
+    <li>Uses indentation to define scope (loops, functions, classes)</li>
+    <li>Other languages use curly braces <code>{}</code> for scope</li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+print("Hello, World!")
+  </pre>
+
+</div>
+
+
+</div>
+
+    <!-- HTML Editors Section -->
+     
+<div id="editor" class="main-section" style="display:none;">
+  <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+
+  <h2 style="color:#333;">Python Comments</h2>
+  <p>Comments are used to explain Python code, make it more readable, or prevent code from executing during testing.</p>
+
+  <h3 style="margin-top:20px;">Creating a Comment</h3>
+  <p>Comments start with a <code>#</code> symbol. Everything after <code>#</code> is ignored by Python.</p>
+
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+# This is a comment
+print("Hello, World!")
+  </pre>
+
+  <p>Comments can also be placed at the end of a line:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+print("Hello, World!")  # This is a comment
+  </pre>
+
+  <h3 style="margin-top:20px;">Disabling Code with Comments</h3>
+  <p>You can use comments to prevent execution of specific lines:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+# print("Hello, World!")
+print("Cheers, Mate!")
+  </pre>
+
+  <h3 style="margin-top:20px;">Multiline Comments</h3>
+  <p>Python doesn't have a specific syntax for multiline comments, but you can add <code>#</code> to each line:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+# This is a comment
+# written in
+# more than just one line
+print("Hello, World!")
+  </pre>
+
+  <p>Alternatively, use a triple-quoted string (not assigned to a variable):</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+"""
+This is a comment
+written in
+more than just one line
+"""
+print("Hello, World!")
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Note:</strong> Triple-quoted strings used this way are ignored only if not assigned to any variable.
+  </div>
+
+</div>
+
+
+</div>
+
+<!-- HTML Basic Section -->
+<div id="basic" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <div style="background:#fff; padding:20px 30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+
+  <h2 style="color:#333;">Python Data Types</h2>
+  <p>In Python, data types define the type of value a variable holds. Different types allow you to perform different kinds of operations.</p>
+
+  <h3 style="margin-top:20px;">Built-in Data Types</h3>
+  <p>Python has the following built-in data types, grouped into categories:</p>
+  <ul style="margin-left:20px;">
+    <li><strong>Text Type:</strong> <code>str</code></li>
+    <li><strong>Numeric Types:</strong> <code>int</code>, <code>float</code>, <code>complex</code></li>
+    <li><strong>Sequence Types:</strong> <code>list</code>, <code>tuple</code>, <code>range</code></li>
+    <li><strong>Mapping Type:</strong> <code>dict</code></li>
+    <li><strong>Set Types:</strong> <code>set</code>, <code>frozenset</code></li>
+    <li><strong>Boolean Type:</strong> <code>bool</code></li>
+    <li><strong>Binary Types:</strong> <code>bytes</code>, <code>bytearray</code>, <code>memoryview</code></li>
+    <li><strong>None Type:</strong> <code>NoneType</code></li>
+  </ul>
+
+  <h3 style="margin-top:20px;">Getting the Data Type</h3>
+  <p>Use <code>type()</code> to get the data type of a variable:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+x = 5
+print(type(x))  # Output: &lt;class 'int'&gt;
+  </pre>
+
+  <h3 style="margin-top:20px;">Setting the Data Type</h3>
+  <p>Data types are assigned automatically when a value is stored in a variable:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+x = "Hello World"            # str
+x = 20                       # int
+x = 20.5                     # float
+x = 1j                       # complex
+x = ["apple", "banana"]      # list
+x = ("apple", "banana")      # tuple
+x = range(6)                 # range
+x = {"name": "John"}         # dict
+x = {"apple", "banana"}      # set
+x = frozenset({"apple"})     # frozenset
+x = True                     # bool
+x = b"Hello"                 # bytes
+x = bytearray(5)             # bytearray
+x = memoryview(bytes(5))     # memoryview
+x = None                     # NoneType
+  </pre>
+
+  <h3 style="margin-top:20px;">Specifying Data Types with Constructors</h3>
+  <p>You can also explicitly define the data type using constructor functions:</p>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+x = str("Hello World")
+x = int(20)
+x = float(20.5)
+x = complex(1j)
+x = list(("apple", "banana"))
+x = tuple(("apple", "banana"))
+x = range(6)
+x = dict(name="John", age=36)
+x = set(("apple", "banana"))
+x = frozenset(("apple", "banana"))
+x = bool(5)
+x = bytes(5)
+x = bytearray(5)
+x = memoryview(bytes(5))
+  </pre>
+
+  <div style="background:#fffbdd; padding:10px; border-left:4px solid #ffc107; border-radius:4px; margin-top:20px;">
+    <strong>Tip:</strong> Use <code>type()</code> to verify the data type at any time.
+  </div>
+
+</div>
+
+</div>
+
+<!-- HTML Elements Section -->
+<div id="elements" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="background:#fff; padding:25px 30px; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.1); font-family:Arial,sans-serif; line-height:1.6;">
+
+  <h2 style="color:#333;">Python Operators</h2>
+  <p>Operators are used to perform operations on variables and values.</p>
+
+  <h3 style="margin-top:20px;">Example</h3>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+print(10 + 5)
+  </pre>
+
+  <p>Python has the following groups of operators:</p>
+  <ul style="margin-left:20px;">
+    <li>Arithmetic operators</li>
+    <li>Assignment operators</li>
+    <li>Comparison operators</li>
+    <li>Logical operators</li>
+    <li>Identity operators</li>
+    <li>Membership operators</li>
+    <li>Bitwise operators</li>
+  </ul>
+
+  <h3>Arithmetic Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
++   Addition           x + y
+-   Subtraction        x - y
+*   Multiplication     x * y
+/   Division           x / y
+%   Modulus            x % y
+**  Exponentiation     x ** y
+//  Floor Division     x // y
+  </pre>
+
+  <h3>Assignment Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
+=     x = 5
++=    x += 3     # x = x + 3
+-=    x -= 3
+*=    x *= 3
+/=    x /= 3
+%=    x %= 3
+//=   x //= 3
+**=   x **= 3
+&=    x &= 3
+|=    x |= 3
+^=    x ^= 3
+>>=   x >>= 3
+<<=   x <<= 3
+:=    print(x := 3)
+  </pre>
+
+  <h3>Comparison Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
+==   Equal
+!=   Not equal
+>    Greater than
+<    Less than
+>=   Greater than or equal to
+<=   Less than or equal to
+  </pre>
+
+  <h3>Logical Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
+and    Returns True if both are true
+or     Returns True if one is true
+not    Reverses the result
+  </pre>
+
+  <h3>Identity Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
+is        True if both refer to the same object
+is not    True if they do not refer to the same object
+  </pre>
+
+  <h3>Membership Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
+in        True if sequence exists in object
+not in    True if sequence does not exist
+  </pre>
+
+  <h3>Bitwise Operators</h3>
+  <pre style="background:#f9f9f9; padding:10px; border-radius:6px;">
+&   AND        Sets bit to 1 if both bits are 1
+|   OR         Sets bit to 1 if one bit is 1
+^   XOR        Sets bit to 1 if only one bit is 1
+~   NOT        Inverts all bits
+<<  Shift left
+>>  Shift right
+  </pre>
+
+  <h3>Operator Precedence</h3>
+  <p>Operator precedence determines the order of operations in expressions.</p>
+
+  <h4>Examples</h4>
+  <pre style="background:#eee; padding:10px; border-radius:6px;">
+print((6 + 3) - (6 + 3))    # Parentheses first
+print(100 + 5 * 3)          # Multiplication before addition
+print(5 + 4 - 7 + 3)        # Left to right for equal precedence
+  </pre>
+
+  <h4>Precedence Order (Top to Bottom)</h4>
+  <ul style="margin-left:20px;">
+    <li><code>()</code> - Parentheses</li>
+    <li><code>**</code> - Exponentiation</li>
+    <li><code>+x, -x, ~x</code> - Unary</li>
+    <li><code>*, /, //, %</code> - Multiplication & division</li>
+    <li><code>+, -</code> - Addition & subtraction</li>
+    <li><code><<, >></code> - Bitwise shifts</li>
+    <li><code>&</code> - Bitwise AND</li>
+    <li><code>^</code> - Bitwise XOR</li>
+    <li><code>|</code> - Bitwise OR</li>
+    <li>Comparisons, identity, membership</li>
+    <li><code>not</code> - Logical NOT</li>
+    <li><code>and</code> - Logical AND</li>
+    <li><code>or</code> - Logical OR</li>
+  </ul>
+
+  <div style="background:#e0f7fa; padding:12px; border-left:5px solid #00acc1; border-radius:5px; margin-top:20px;">
+    <strong>Tip:</strong> When unsure, use parentheses <code>()</code> to control the evaluation order.
+  </div>
+
+</div>
+
+
+</div>
+
+<!-- HTML Attributes Section -->
+<div id="attributes" class="main-section" style="display:none;">
+  <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <div style="background:#fdfdfd; padding:30px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-family:'Segoe UI', sans-serif; line-height:1.7;">
+
+  <h2 style="color:#2c3e50;">Python If...Else</h2>
+  <p>Python supports standard logical conditions:</p>
+  <ul style="margin-left:20px;">
+    <li><code>a == b</code> – Equals</li>
+    <li><code>a != b</code> – Not equal</li>
+    <li><code>a &lt; b</code> – Less than</li>
+    <li><code>a &lt;= b</code> – Less than or equal to</li>
+    <li><code>a &gt; b</code> – Greater than</li>
+    <li><code>a &gt;= b</code> – Greater than or equal to</li>
+  </ul>
+
+  <h3>If Statement</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 33
+b = 200
+if b > a:
+  print("b is greater than a")</pre>
+
+  <h3>Indentation</h3>
+  <p>Python uses indentation to define scope.</p>
+  <pre style="background:#ffe6e6; padding:10px; border-radius:6px;"># This will raise an error:
+a = 33
+b = 200
+if b > a:
+print("b is greater than a")</pre>
+
+  <h3>Elif</h3>
+  <p>Use <code>elif</code> for multiple conditions:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 33
+b = 33
+if b > a:
+  print("b is greater than a")
+elif a == b:
+  print("a and b are equal")</pre>
+
+  <h3>Else</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 200
+b = 33
+if b > a:
+  print("b is greater than a")
+elif a == b:
+  print("a and b are equal")
+else:
+  print("a is greater than b")</pre>
+
+  <h3>Short Hand If</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">if a > b: print("a is greater than b")</pre>
+
+  <h3>Short Hand If...Else</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 2
+b = 330
+print("A") if a > b else print("B")</pre>
+
+  <h4>Multiple Conditions (Ternary)</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 330
+b = 330
+print("A") if a > b else print("=") if a == b else print("B")</pre>
+
+  <h3>Logical Operators</h3>
+  <h4>And</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 200
+b = 33
+c = 500
+if a > b and c > a:
+  print("Both conditions are True")</pre>
+
+  <h4>Or</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">if a > b or a > c:
+  print("At least one of the conditions is True")</pre>
+
+  <h4>Not</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">if not a > b:
+  print("a is NOT greater than b")</pre>
+
+  <h3>Nested If</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">x = 41
+if x > 10:
+  print("Above ten,")
+  if x > 20:
+    print("and also above 20!")
+  else:
+    print("but not above 20.")</pre>
+
+  <h3>Pass Statement</h3>
+  <p>If an <code>if</code> block is empty, use <code>pass</code> to avoid error:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:6px;">a = 33
+b = 200
+if b > a:
+  pass</pre>
+
+</div>
+
+</div>
+
+<!-- HTML Headings Section -->
+<div id="headings" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <div style="background:#fff; padding:30px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:'Segoe UI', sans-serif; line-height:1.6;">
+
+  <h2 style="color:#2c3e50;">🔁 Python While Loops</h2>
+  <p>The <strong>while</strong> loop runs a block of code as long as a condition is <code>True</code>.</p>
+
+  <h4>Basic While Loop</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">i = 1
+while i &lt; 6:
+  print(i)
+  i += 1</pre>
+
+  <h4>Break Statement</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">i = 1
+while i &lt; 6:
+  print(i)
+  if i == 3:
+    break
+  i += 1</pre>
+
+  <h4>Continue Statement</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">i = 0
+while i &lt; 6:
+  i += 1
+  if i == 3:
+    continue
+  print(i)</pre>
+
+  <h4>Else with While</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">i = 1
+while i &lt; 6:
+  print(i)
+  i += 1
+else:
+  print("i is no longer less than 6")</pre>
+
+  <hr style="margin:30px 0;">
+
+  <h2 style="color:#2c3e50;">🔁 Python For Loops</h2>
+  <p>The <strong>for</strong> loop iterates over a sequence (list, tuple, set, dictionary, string).</p>
+
+  <h4>Basic For Loop</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+  print(x)</pre>
+
+  <h4>Loop Through String</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in "banana":
+  print(x)</pre>
+
+  <h4>Break Before Print</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in fruits:
+  if x == "banana":
+    break
+  print(x)</pre>
+
+  <h4>Continue Statement</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in fruits:
+  if x == "banana":
+    continue
+  print(x)</pre>
+
+  <h4>Using range()</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in range(2, 30, 3):
+  print(x)</pre>
+
+  <h4>Else in For Loop</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in range(6):
+  print(x)
+else:
+  print("Finally finished!")</pre>
+
+  <h4>Break Cancels Else</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in range(6):
+  if x == 3:
+    break
+  print(x)
+else:
+  print("Won't run")</pre>
+
+  <h4>Nested Loops</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">adj = ["red", "big", "tasty"]
+fruits = ["apple", "banana", "cherry"]
+for x in adj:
+  for y in fruits:
+    print(x, y)</pre>
+
+  <h4>Pass Statement</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">for x in [0, 1, 2]:
+  pass</pre>
+
+</div>
+
+</div>
+
+<!-- HTML Paragraphs Section -->
+<div id="paragraphs" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+ <div style="background:#fff; padding:30px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1); font-family:'Segoe UI', sans-serif; line-height:1.7; color:#333;">
+
+  <h2 style="color:#2c3e50;">🖨️ Python Output - <code>print()</code> Function</h2>
+
+  <p>Use the <code>print()</code> function to display output on the screen.</p>
+
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">print('Python is powerful')</pre>
+
+  <h4>✅ Syntax:</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">
+print(object, sep=' ', end='\n', file=sys.stdout, flush=False)
+  </pre>
+
+  <ul>
+    <li><strong>object</strong>: Values to print</li>
+    <li><strong>sep</strong>: Separator between objects</li>
+    <li><strong>end</strong>: What to print at the end (default is newline)</li>
+    <li><strong>file</strong>: Where to output (default is screen)</li>
+    <li><strong>flush</strong>: Force flushing the output buffer</li>
+  </ul>
+
+  <h4>📌 Examples:</h4>
+
+  <strong>Example 1:</strong> Simple Print
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">print('Good Morning!')
+print('It is rainy today')</pre>
+
+  <strong>Example 2:</strong> Using <code>end</code> Parameter
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">print('Good Morning!', end=' ')
+print('It is rainy today')</pre>
+
+  <strong>Example 3:</strong> Using <code>sep</code> Parameter
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">print('New Year', 2023, 'See you soon!', sep='. ')</pre>
+
+  <strong>Example 4:</strong> Print Variables
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">number = -10.6
+name = "Programiz"
+print(5)
+print(number)
+print(name)</pre>
+
+  <strong>Example 5:</strong> Concatenate Strings
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">print('Programiz is ' + 'awesome.')</pre>
+
+  <strong>Example 6:</strong> Formatted Output
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">x = 5
+y = 10
+print('The value of x is {} and y is {}'.format(x, y))</pre>
+
+  <hr style="margin:30px 0;">
+
+  <h2 style="color:#2c3e50;">⌨️ Python Input - <code>input()</code> Function</h2>
+
+  <p>Use <code>input()</code> to take input from the user. Input is always returned as a <code>string</code>.</p>
+
+  <h4>✅ Syntax:</h4>
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">input("Your prompt here")</pre>
+
+  <strong>Example:</strong> Basic User Input
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">num = input('Enter a number: ')
+print('You Entered:', num)
+print('Data type of num:', type(num))</pre>
+
+  <strong>Example:</strong> Convert Input to Number
+  <pre style="background:#f4f4f4;padding:10px;border-radius:6px;">num = int(input('Enter a number: '))
+print('You Entered:', num)
+print('Data type:', type(num))</pre>
+
+</div>
+
+</div>
+
+
+
+<!-- HTML Formatting Section -->
+<div id="arrays" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); line-height: 1.6; color: #333; font-size: 16px;">
+  <h2 style="color: #0056b3;">Python Arrays</h2>
+  <p><strong>Note:</strong> Python does not have built-in support for Arrays, but Python Lists can be used instead.</p>
+
+  <h3 style="color: #0056b3;">Arrays</h3>
+  <p><strong>Note:</strong> This page shows you how to use LISTS as ARRAYS, however, to work with arrays in Python you will have to import a library, like the NumPy library.</p>
+
+  <p>Arrays are used to store multiple values in one single variable:</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">cars = ["Ford", "Volvo", "BMW"]</pre>
+
+  <h3 style="color: #0056b3;">What is an Array?</h3>
+  <p>An array is a special variable, which can hold more than one value at a time.</p>
+  <p>If you have a list of items (a list of car names, for example), storing the cars in single variables could look like this:</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">car1 = "Ford"
+car2 = "Volvo"
+car3 = "BMW"</pre>
+
+  <p>However, what if you want to loop through the cars and find a specific one? And what if you had not 3 cars, but 300?</p>
+  <p>The solution is an array!</p>
+  <p>An array can hold many values under a single name, and you can access the values by referring to an index number.</p>
+
+  <h3 style="color: #0056b3;">Access the Elements of an Array</h3>
+  <p>You refer to an array element by referring to the index number.</p>
+  <p><strong>Example</strong><br>Get the value of the first array item:</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">x = cars[0]</pre>
+
+  <p><strong>Example</strong><br>Modify the value of the first array item:</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">cars[0] = "Toyota"</pre>
+
+  <h3 style="color: #0056b3;">The Length of an Array</h3>
+  <p>Use the <code>len()</code> method to return the length of an array (the number of elements in an array).</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">x = len(cars)</pre>
+  <p><strong>Note:</strong> The length of an array is always one more than the highest array index.</p>
+
+  <h3 style="color: #0056b3;">Looping Array Elements</h3>
+  <p>You can use the <code>for in</code> loop to loop through all the elements of an array.</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">for x in cars:
+  print(x)</pre>
+
+  <h3 style="color: #0056b3;">Adding Array Elements</h3>
+  <p>You can use the <code>append()</code> method to add an element to an array.</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">cars.append("Honda")</pre>
+
+  <h3 style="color: #0056b3;">Removing Array Elements</h3>
+  <p>You can use the <code>pop()</code> method to remove an element from the array.</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">cars.pop(1)</pre>
+
+  <p>You can also use the <code>remove()</code> method to remove an element from the array.</p>
+  <pre style="background:#eee; padding:10px; border-radius:5px;">cars.remove("Volvo")</pre>
+  <p><strong>Note:</strong> The list's <code>remove()</code> method only removes the first occurrence of the specified value.</p>
+
+  <h3 style="color: #0056b3;">Array Methods</h3>
+  <p>Python has a set of built-in methods that you can use on lists/arrays.</p>
+
+  <table style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #0056b3; color: white;">
+        <th style="padding: 8px; border: 1px solid #ccc;">Method</th>
+        <th style="padding: 8px; border: 1px solid #ccc;">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding:8px; border:1px solid #ccc;">append()</td><td style="padding:8px; border:1px solid #ccc;">Adds an element at the end of the list</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">clear()</td><td style="padding:8px; border:1px solid #ccc;">Removes all the elements from the list</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">copy()</td><td style="padding:8px; border:1px solid #ccc;">Returns a copy of the list</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">count()</td><td style="padding:8px; border:1px solid #ccc;">Returns the number of elements with the specified value</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">extend()</td><td style="padding:8px; border:1px solid #ccc;">Add the elements of a list (or any iterable), to the end of the current list</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">index()</td><td style="padding:8px; border:1px solid #ccc;">Returns the index of the first element with the specified value</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">insert()</td><td style="padding:8px; border:1px solid #ccc;">Adds an element at the specified position</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">pop()</td><td style="padding:8px; border:1px solid #ccc;">Removes the element at the specified position</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">remove()</td><td style="padding:8px; border:1px solid #ccc;">Removes the first item with the specified value</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">reverse()</td><td style="padding:8px; border:1px solid #ccc;">Reverses the order of the list</td></tr>
+      <tr><td style="padding:8px; border:1px solid #ccc;">sort()</td><td style="padding:8px; border:1px solid #ccc;">Sorts the list</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+</div>
+
+<!-- HTML Quotations Section -->
+<div id="quotations" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="font-family: 'Segoe UI', sans-serif; background-color: #fffdf8; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); line-height: 1.7; color: #222; font-size: 16px;">
+  <h2 style="color: #0b5394;">Python - 2-D Array</h2>
+
+  <p>Two dimensional array is an array within an array. It is an array of arrays. In this type of array the position of a data element is referred by two indices instead of one. So it represents a table with rows and columns of data.</p>
+
+  <p>In the below example of a two dimensional array, observe that each array element itself is also an array.</p>
+
+  <p>Consider the example of recording temperatures 4 times a day, every day. Sometimes the recording instrument may be faulty and we fail to record data. Such data for 4 days can be presented as a two dimensional array as below.</p>
+
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+Day 1 - 11 12 5 2 
+Day 2 - 15 6 10 
+Day 3 - 10 8 12 5 
+Day 4 - 12 15 8 6 
+  </pre>
+
+  <p>The above data can be represented as a two dimensional array as below.</p>
+
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">T = [[11, 12, 5, 2], [15, 6,10], [10, 8, 12, 5], [12,15,8,6]]</pre>
+
+  <h3 style="color:#0b5394;">Accessing Values</h3>
+  <p>The data elements in two dimensional arrays can be accessed using two indices. One index referring to the main or parent array and another index referring to the position of the data element in the inner array. If we mention only one index then the entire inner array is printed for that index position.</p>
+
+  <p><strong>Example</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+from array import *
+
+T = [[11, 12, 5, 2], [15, 6,10], [10, 8, 12, 5], [12,15,8,6]]
+
+print(T[0])
+print(T[1][2])
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+[11, 12, 5, 2]
+10
+  </pre>
+
+  <p>To print out the entire two dimensional array we can use python for loop as shown below. We use end of line to print out the values in different rows.</p>
+
+  <p><strong>Example</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+from array import *
+
+T = [[11, 12, 5, 2], [15, 6,10], [10, 8, 12, 5], [12,15,8,6]]
+for r in T:
+   for c in r:
+      print(c,end = " ")
+   print()
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+11 12 5 2 
+15 6 10 
+10 8 12 5 
+12 15 8 6 
+  </pre>
+
+  <h3 style="color:#0b5394;">Inserting Values</h3>
+  <p>We can insert new data elements at specific position by using the <code>insert()</code> method and specifying the index.</p>
+
+  <p><strong>Example</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+from array import *
+T = [[11, 12, 5, 2], [15, 6,10], [10, 8, 12, 5], [12,15,8,6]]
+
+T.insert(2, [0,5,11,13,6])
+
+for r in T:
+   for c in r:
+      print(c,end = " ")
+   print()
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+11 12 5 2 
+15 6 10 
+0 5 11 13 6 
+10 8 12 5 
+12 15 8 6 
+  </pre>
+
+  <h3 style="color:#0b5394;">Updating Values</h3>
+  <p>We can update the entire inner array or some specific data elements of the inner array by reassigning the values using the array index.</p>
+
+  <p><strong>Example</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+from array import *
+
+T = [[11, 12, 5, 2], [15, 6,10], [10, 8, 12, 5], [12,15,8,6]]
+
+T[2] = [11,9]
+T[0][3] = 7
+
+for r in T:
+   for c in r:
+      print(c,end = " ")
+   print()
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+11 12 5 7 
+15 6 10 
+11 9 
+12 15 8 6 
+  </pre>
+
+  <h3 style="color:#0b5394;">Deleting the Values</h3>
+  <p>We can delete the entire inner array or some specific data elements of the inner array by using the <code>del()</code> method with index. But in case you need to remove specific data elements in one of the inner arrays, then use the update process described above.</p>
+
+  <p><strong>Example</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+from array import *
+
+T = [[11, 12, 5, 2], [15, 6,10], [10, 8, 12, 5], [12,15,8,6]]
+
+del T[3]
+
+for r in T:
+   for c in r:
+      print(c,end = " ")
+   print()
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+11 12 5 2 
+15 6 10 
+10 8 12 5 
+  </pre>
+</div>
+
+</div>
+
+<!-- HTML Comments Section -->
+<div id="comments" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Next &gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfcfb; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python Functions</h2>
+
+  <p>A function is a block of code which only runs when it is called.</p>
+  <p>You can pass data, known as parameters, into a function.</p>
+  <p>A function can return data as a result.</p>
+
+  <h3 style="color:#0b5394;">Creating a Function</h3>
+  <p>In Python a function is defined using the <code>def</code> keyword:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function():
+  print("Hello from a function")</pre>
+
+  <h3 style="color:#0b5394;">Calling a Function</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function():
+  print("Hello from a function")
+
+my_function()</pre>
+
+  <h3 style="color:#0b5394;">Arguments</h3>
+  <p>Information can be passed into functions as arguments.</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(fname):
+  print(fname + " Refsnes")
+
+my_function("Emil")
+my_function("Tobias")
+my_function("Linus")</pre>
+
+  <h3 style="color:#0b5394;">Parameters or Arguments?</h3>
+  <ul>
+    <li><strong>Parameter</strong>: variable in function definition.</li>
+    <li><strong>Argument</strong>: value passed when calling the function.</li>
+  </ul>
+
+  <h3 style="color:#0b5394;">Number of Arguments</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(fname, lname):
+  print(fname + " " + lname)
+
+my_function("Emil", "Refsnes")</pre>
+
+  <h3 style="color:#0b5394;">Arbitrary Arguments, *args</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(*kids):
+  print("The youngest child is " + kids[2])
+
+my_function("Emil", "Tobias", "Linus")</pre>
+
+  <h3 style="color:#0b5394;">Keyword Arguments</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(child3, child2, child1):
+  print("The youngest child is " + child3)
+
+my_function(child1 = "Emil", child2 = "Tobias", child3 = "Linus")</pre>
+
+  <h3 style="color:#0b5394;">Arbitrary Keyword Arguments, **kwargs</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(**kid):
+  print("His last name is " + kid["lname"])
+
+my_function(fname = "Tobias", lname = "Refsnes")</pre>
+
+  <h3 style="color:#0b5394;">Default Parameter Value</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(country = "Norway"):
+  print("I am from " + country)
+
+my_function("Sweden")
+my_function("India")
+my_function()
+my_function("Brazil")</pre>
+
+  <h3 style="color:#0b5394;">Passing a List as an Argument</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(food):
+  for x in food:
+    print(x)
+
+fruits = ["apple", "banana", "cherry"]
+my_function(fruits)</pre>
+
+  <h3 style="color:#0b5394;">Return Values</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(x):
+  return 5 * x
+
+print(my_function(3))
+print(my_function(5))
+print(my_function(9))</pre>
+
+  <h3 style="color:#0b5394;">The pass Statement</h3>
+  <p>Use <code>pass</code> when the function has no content:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def myfunction():
+  pass</pre>
+
+  <h3 style="color:#0b5394;">Positional-Only Arguments</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(x, /):
+  print(x)
+
+my_function(3)</pre>
+
+  <h3 style="color:#0b5394;">Keyword-Only Arguments</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(*, x):
+  print(x)
+
+my_function(x = 3)</pre>
+
+  <h3 style="color:#0b5394;">Combine Positional-Only and Keyword-Only</h3>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">def my_function(a, b, /, *, c, d):
+  print(a + b + c + d)
+
+my_function(5, 6, c = 7, d = 8)</pre>
+
+  <h3 style="color:#0b5394;">Recursion</h3>
+  <p>A function can call itself. This is known as recursion.</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+def tri_recursion(k):
+  if(k > 0):
+    result = k + tri_recursion(k - 1)
+    print(result)
+  else:
+    result = 0
+  return result
+
+print("Recursion Example Results:")
+tri_recursion(6)
+  </pre>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="colors" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfcfb; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python Classes and Objects</h2>
+
+  <h3 style="color:#0b5394;">Python is an Object-Oriented Programming Language</h3>
+  <p>Almost everything in Python is an object, with its properties and methods.</p>
+  <p>A class is like an object constructor, or a "blueprint" for creating objects.</p>
+
+  <h3 style="color:#0b5394;">Create a Class</h3>
+  <p>To create a class, use the <code>class</code> keyword:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class MyClass:
+  x = 5
+  </pre>
+
+  <h3 style="color:#0b5394;">Create Object</h3>
+  <p>Now we can use the class named <code>MyClass</code> to create objects:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+p1 = MyClass()
+print(p1.x)
+  </pre>
+
+  <h3 style="color:#0b5394;">The __init__() Function</h3>
+  <p>The <code>__init__()</code> function is always executed when the class is being initiated. It’s used to assign values to object properties or run startup operations.</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("John", 36)
+
+print(p1.name)
+print(p1.age)
+  </pre>
+
+  <p><strong>Note:</strong> <code>__init__()</code> is automatically called when a class is instantiated.</p>
+
+  <h3 style="color:#0b5394;">The __str__() Function</h3>
+  <p>This function returns a string representation of the object.</p>
+
+  <p><strong>Without __str__()</strong>:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+p1 = Person("John", 36)
+print(p1)
+  </pre>
+
+  <p><strong>With __str__()</strong>:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+  def __str__(self):
+    return f"{self.name}({self.age})"
+
+p1 = Person("John", 36)
+print(p1)
+  </pre>
+
+  <h3 style="color:#0b5394;">Object Methods</h3>
+  <p>Objects can contain methods. A method is a function that belongs to an object.</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+  def myfunc(self):
+    print("Hello my name is " + self.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+  </pre>
+
+  <h3 style="color:#0b5394;">The self Parameter</h3>
+  <p><code>self</code> refers to the current instance of the class. It must be the first parameter of any method in the class.</p>
+  <p>You can name it anything, but it’s usually called <code>self</code>.</p>
+
+  <p><strong>Example:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(mysillyobject, name, age):
+    mysillyobject.name = name
+    mysillyobject.age = age
+
+  def myfunc(abc):
+    print("Hello my name is " + abc.name)
+
+p1 = Person("John", 36)
+p1.myfunc()
+  </pre>
+
+  <h3 style="color:#0b5394;">Modify Object Properties</h3>
+  <p>You can modify properties on objects like this:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+p1.age = 40
+  </pre>
+
+  <h3 style="color:#0b5394;">Delete Object Properties</h3>
+  <p>Use <code>del</code> to delete object properties:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+del p1.age
+  </pre>
+
+  <h3 style="color:#0b5394;">Delete Objects</h3>
+  <p>You can delete objects with the <code>del</code> keyword:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+del p1
+  </pre>
+
+  <h3 style="color:#0b5394;">The pass Statement</h3>
+  <p>Class definitions cannot be empty. Use <code>pass</code> to avoid errors if you want to leave it empty:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  pass
+  </pre>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="inheritance" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfcfb; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python Inheritance</h2>
+
+  <p>Inheritance allows us to define a class that inherits all the methods and properties from another class.</p>
+  <p><strong>Parent class</strong>: The class being inherited from (base class).</p>
+  <p><strong>Child class</strong>: The class that inherits from another class (derived class).</p>
+
+  <h3 style="color:#0b5394;">Create a Parent Class</h3>
+  <p>Create a class named <code>Person</code> with <code>firstname</code>, <code>lastname</code>, and a method <code>printname()</code>:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, fname, lname):
+    self.firstname = fname
+    self.lastname = lname
+
+  def printname(self):
+    print(self.firstname, self.lastname)
+
+# Create an object and call the method
+x = Person("John", "Doe")
+x.printname()
+  </pre>
+
+  <h3 style="color:#0b5394;">Create a Child Class</h3>
+  <p>To create a class that inherits from another, pass the parent class in parentheses.</p>
+  <p><strong>Example:</strong></p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Student(Person):
+  pass
+
+x = Student("Mike", "Olsen")
+x.printname()
+  </pre>
+  <p><strong>Note:</strong> Use <code>pass</code> if you don’t want to add any new functionality yet.</p>
+
+  <h3 style="color:#0b5394;">Add the __init__() Function</h3>
+  <p>When you define an <code>__init__()</code> method in the child, it overrides the one from the parent.</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Student(Person):
+  def __init__(self, fname, lname):
+    Person.__init__(self, fname, lname)
+  </pre>
+  <p>Or using the <code>super()</code> function:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Student(Person):
+  def __init__(self, fname, lname):
+    super().__init__(fname, lname)
+  </pre>
+
+  <h3 style="color:#0b5394;">Add Properties</h3>
+  <p>Add a new property called <code>graduationyear</code> to the child class:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Student(Person):
+  def __init__(self, fname, lname):
+    super().__init__(fname, lname)
+    self.graduationyear = 2019
+  </pre>
+
+  <p>Make it dynamic by adding a parameter:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Student(Person):
+  def __init__(self, fname, lname, year):
+    super().__init__(fname, lname)
+    self.graduationyear = year
+
+x = Student("Mike", "Olsen", 2019)
+  </pre>
+
+  <h3 style="color:#0b5394;">Add Methods</h3>
+  <p>Add a <code>welcome()</code> method that uses the child class properties:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Student(Person):
+  def __init__(self, fname, lname, year):
+    super().__init__(fname, lname)
+    self.graduationyear = year
+
+  def welcome(self):
+    print("Welcome", self.firstname, self.lastname, "to the class of", self.graduationyear)
+  </pre>
+
+  <p><strong>Note:</strong> If a method in the child has the same name as one in the parent, it overrides the parent’s method.</p>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="polymorphism" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfcfb; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python Polymorphism</h2>
+
+  <p><strong>Polymorphism</strong> means "many forms". In programming, it refers to methods, functions, or operators with the same name that can be used on different types of objects.</p>
+
+  <h3 style="color:#0b5394;">Function Polymorphism</h3>
+  <p>A good example of function polymorphism in Python is the built-in <code>len()</code> function:</p>
+
+  <h4>On a String</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+x = "Hello World!"
+print(len(x))  # Output: 12
+  </pre>
+
+  <h4>On a Tuple</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+mytuple = ("apple", "banana", "cherry")
+print(len(mytuple))  # Output: 3
+  </pre>
+
+  <h4>On a Dictionary</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+print(len(thisdict))  # Output: 3
+  </pre>
+
+  <h3 style="color:#0b5394;">Class Polymorphism</h3>
+  <p>You can define multiple classes with the same method name, and use polymorphism to call that method on different objects.</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Car:
+  def __init__(self, brand, model):
+    self.brand = brand
+    self.model = model
+  def move(self):
+    print("Drive!")
+
+class Boat:
+  def __init__(self, brand, model):
+    self.brand = brand
+    self.model = model
+  def move(self):
+    print("Sail!")
+
+class Plane:
+  def __init__(self, brand, model):
+    self.brand = brand
+    self.model = model
+  def move(self):
+    print("Fly!")
+
+car1 = Car("Ford", "Mustang")
+boat1 = Boat("Ibiza", "Touring 20")
+plane1 = Plane("Boeing", "747")
+
+for x in (car1, boat1, plane1):
+  x.move()
+  </pre>
+
+  <h3 style="color:#0b5394;">Inheritance-Based Polymorphism</h3>
+  <p>Child classes can override methods from their parent classes while still inheriting other attributes and methods.</p>
+
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Vehicle:
+  def __init__(self, brand, model):
+    self.brand = brand
+    self.model = model
+  def move(self):
+    print("Move!")
+
+class Car(Vehicle):
+  pass
+
+class Boat(Vehicle):
+  def move(self):
+    print("Sail!")
+
+class Plane(Vehicle):
+  def move(self):
+    print("Fly!")
+
+car1 = Car("Ford", "Mustang")
+boat1 = Boat("Ibiza", "Touring 20")
+plane1 = Plane("Boeing", "747")
+
+for x in (car1, boat1, plane1):
+  print(x.brand)
+  print(x.model)
+  x.move()
+  </pre>
+
+  <p><strong>Explanation:</strong></p>
+  <ul>
+    <li><code>Car</code> uses the inherited <code>move()</code> method from <code>Vehicle</code>.</li>
+    <li><code>Boat</code> and <code>Plane</code> override the <code>move()</code> method with their own implementations.</li>
+  </ul>
+
+  <p>This demonstrates how polymorphism allows calling the same method on different classes, resulting in different behaviors.</p>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="constructor" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfcfb; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python Constructor and Destructor</h2>
+
+  <h3 style="color:#0b5394;">Constructor: <code>__init__()</code> Method</h3>
+  <p>A constructor is a special method in a class that gets called automatically when a new object is created. In Python, the constructor method is named <code>__init__()</code>.</p>
+
+  <p><strong>Purpose:</strong> Used to initialize object properties.</p>
+
+  <h4>Example</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, name, age):
+    self.name = name
+    self.age = age
+
+  def display(self):
+    print("Name:", self.name)
+    print("Age:", self.age)
+
+p1 = Person("Alice", 30)
+p1.display()
+  </pre>
+
+  <p><strong>Output:</strong><br>Name: Alice<br>Age: 30</p>
+
+  <p><strong>Note:</strong> <code>__init__()</code> is automatically called when the object is created.</p>
+
+  <h3 style="color:#0b5394;">Destructor: <code>__del__()</code> Method</h3>
+  <p>A destructor is a special method called when an object is about to be destroyed. In Python, it's named <code>__del__()</code>.</p>
+
+  <p><strong>Purpose:</strong> Used to clean up resources like closing files or network connections.</p>
+
+  <h4>Example</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Person:
+  def __init__(self, name):
+    self.name = name
+    print(f"{self.name} has been created.")
+
+  def __del__(self):
+    print(f"{self.name} is being destroyed.")
+
+p1 = Person("Bob")
+del p1  # Explicitly deleting the object
+  </pre>
+
+  <p><strong>Output:</strong><br>Bob has been created.<br>Bob is being destroyed.</p>
+
+  <p><strong>Note:</strong> Python's garbage collector automatically deletes objects when they are no longer needed, but you can also delete them manually using <code>del</code>.</p>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="modifier" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfcfb; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python - Access Modifiers</h2>
+
+  <p>Access modifiers in Python help control the accessibility of class members (variables and methods). There are three types:</p>
+  <ul>
+    <li><strong>Public</strong>: Accessible from anywhere.</li>
+    <li><strong>Protected</strong>: Accessible within the class and subclasses.</li>
+    <li><strong>Private</strong>: Accessible only within the class.</li>
+  </ul>
+
+  <h3 style="color:#0b5394;">Public Members</h3>
+  <p>By default, all members are public. Example:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Employee:
+    def __init__(self, name="Bhavana", age=24):
+        self.name = name
+        self.age = age
+
+e1 = Employee()
+e2 = Employee("Bharat", 25)
+
+print(e1.name)  # Bhavana
+print(e1.age)   # 24
+print(e2.name)  # Bharat
+print(e2.age)   # 25
+  </pre>
+
+  <h3 style="color:#0b5394;">Protected and Private Members</h3>
+  <p>Use underscores to define protected or private variables:</p>
+  <ul>
+    <li><code>_var</code>: Protected</li>
+    <li><code>__var</code>: Private</li>
+  </ul>
+
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Employee:
+    def __init__(self, name, age, salary):
+        self.name = name        # public
+        self.__age = age        # private
+        self._salary = salary   # protected
+
+    def displayEmployee(self):
+        print("Name:", self.name, "Age:", self.__age, "Salary:", self._salary)
+
+e1 = Employee("Bhavana", 24, 10000)
+
+print(e1.name)      # Accessible
+print(e1._salary)   # Accessible (but discouraged)
+print(e1.__age)     # Raises AttributeError
+  </pre>
+
+  <h3 style="color:#0b5394;">Name Mangling</h3>
+  <p>Private variables can still be accessed using name mangling:</p>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+print(e1._Employee__age)  # Access private variable
+  </pre>
+
+  <h3 style="color:#0b5394;">Python Property Object</h3>
+  <p><code>property()</code> is used to encapsulate access to private data using getters and setters.</p>
+
+  <h4>Using Getters and Setters</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Employee:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+    def get_name(self): return self.__name
+    def get_age(self): return self.__age
+    def set_name(self, name): self.__name = name
+    def set_age(self, age): self.__age = age
+
+e1 = Employee("Bhavana", 24)
+print(e1.get_name(), e1.get_age())
+
+e1.set_name("Archana")
+e1.set_age(21)
+print(e1.get_name(), e1.get_age())
+  </pre>
+
+  <h4>Using property()</h4>
+  <pre style="background:#f4f4f4; padding:10px; border-radius:5px;">
+class Employee:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+    def get_name(self): return self.__name
+    def set_name(self, name): self.__name = name
+    def get_age(self): return self.__age
+    def set_age(self, age): self.__age = age
+
+    name = property(get_name, set_name, doc="Employee name")
+    age = property(get_age, set_age, doc="Employee age")
+
+e1 = Employee("Bhavana", 24)
+print(e1.name, e1.age)
+
+e1.name = "Archana"
+e1.age = 23
+print(e1.name, e1.age)
+  </pre>
+
+  <p><strong>Note:</strong> The <code>property()</code> function creates managed attributes and maintains encapsulation by allowing control over access.</p>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="encapsulation" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fdfdfd; padding:30px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Python - Encapsulation</h2>
+
+  <p>Encapsulation is the process of bundling attributes and methods into a single unit. It's one of the key pillars of object-oriented programming.</p>
+
+  <p>In Python, encapsulation hides the internal state of an object and allows access only through methods, thus protecting the object’s integrity.</p>
+
+  <h3 style="color:#0b5394;">Implementing Encapsulation in Python</h3>
+  <p>Unlike Java or C++, Python doesn’t use keywords like <code>public</code>, <code>private</code>, or <code>protected</code>. It uses naming conventions:</p>
+  <ul>
+    <li><code>public_var</code> – Public (default, accessible everywhere)</li>
+    <li><code>_protected_var</code> – Protected (convention, accessible within class and subclasses)</li>
+    <li><code>__private_var</code> – Private (name mangled, not directly accessible)</li>
+  </ul>
+
+  <h4 style="color:#0b5394;">Example 1 – Public Variables</h4>
+  <pre style="background:#f4f4f4; padding:12px; border-radius:6px;">
+class Student:
+    def __init__(self, name="Rajaram", marks=50):
+        self.name = name
+        self.marks = marks
+
+s1 = Student()
+s2 = Student("Bharat", 25)
+
+print("Name:", s1.name, "Marks:", s1.marks)
+print("Name:", s2.name, "Marks:", s2.marks)
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#e8f4fd; padding:10px; border-radius:6px;">Name: Rajaram Marks: 50
+Name: Bharat Marks: 25</pre>
+
+  <h4 style="color:#0b5394;">Example 2 – Private Variables</h4>
+  <pre style="background:#f4f4f4; padding:12px; border-radius:6px;">
+class Student:
+    def __init__(self, name="Rajaram", marks=50):
+        self.__name = name
+        self.__marks = marks
+
+    def studentdata(self):
+        print("Name:", self.__name, "Marks:", self.__marks)
+
+s1 = Student()
+s2 = Student("Bharat", 25)
+
+s1.studentdata()
+s2.studentdata()
+
+# Attempting direct access will raise an error:
+# print(s1.__name)  → AttributeError
+  </pre>
+
+  <p><strong>Output:</strong></p>
+  <pre style="background:#e8f4fd; padding:10px; border-radius:6px;">Name: Rajaram Marks: 50
+Name: Bharat Marks: 25
+AttributeError: 'Student' object has no attribute '__name'</pre>
+
+  <h3 style="color:#0b5394;">What is Name Mangling?</h3>
+  <p>Private variables can still be accessed from outside using <strong>name mangling</strong>:</p>
+  <pre style="background:#f4f4f4; padding:12px; border-radius:6px;">
+print(s1._Student__marks)  # 50
+  </pre>
+
+  <p>Python does not enforce strict access control. Instead, it relies on naming conventions and developer discipline to implement encapsulation.</p>
+
+  <h4 style="color:#0b5394;">Summary</h4>
+  <ul>
+    <li>Encapsulation ensures internal object data is hidden and only accessed through defined methods.</li>
+    <li>Python uses single <code>_</code> and double <code>__</code> underscores to imply protection levels.</li>
+    <li>Name mangling (<code>_ClassName__var</code>) can bypass private access — use it wisely.</li>
+  </ul>
+</div>
+
+</div>
+
+<!-- HTML Colors Section -->
+<div id="getters" class="main-section" style="display:none;">
+    <!-- Top Navigation -->
+<div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+  <button style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">&lt; Previous</button>
+  <button onclick="scrollToNext()" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;">Home&gt;</button>
+</div>
+<div style="font-family:'Segoe UI', sans-serif; background-color:#fefefe; padding:30px; border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,0.08); font-size:16px; line-height:1.7; color:#222;">
+  <h2 style="color:#0b5394;">Getter and Setter in Python</h2>
+  <p><em>Last Updated: 22 Mar, 2025</em></p>
+
+  <p>In Python, <strong>getter</strong> and <strong>setter</strong> methods are used to access and update private attributes of a class. They provide controlled access to class data and help in maintaining encapsulation and data integrity.</p>
+
+  <ul>
+    <li><strong>Getter</strong>: Retrieves the value of a private attribute.</li>
+    <li><strong>Setter</strong>: Sets/updates the value of a private attribute with optional validation.</li>
+  </ul>
+
+  <h3 style="color:#0b5394;">1. Using Normal Functions</h3>
+  <pre style="background:#f4f4f4; padding:12px; border-radius:6px;">
+class Geek:
+    def __init__(self, age=0):
+        self._age = age
+
+    # getter method
+    def get_age(self):
+        return self._age
+
+    # setter method
+    def set_age(self, x):
+        self._age = x
+
+raj = Geek()
+raj.set_age(21)
+print(raj.get_age())
+print(raj._age)
+  </pre>
+
+  <strong>Output:</strong>
+  <pre style="background:#e8f4fd; padding:10px; border-radius:6px;">21
+21</pre>
+
+  <p><strong>Explanation:</strong> We used <code>get_age()</code> and <code>set_age()</code> to control access to the <code>_age</code> variable.</p>
+
+  <h3 style="color:#0b5394;">2. Using <code>property()</code> Function</h3>
+  <pre style="background:#f4f4f4; padding:12px; border-radius:6px;">
+class Geeks:
+    def __init__(self):
+        self._age = 0
+
+    def get_age(self):
+        print("getter method called")
+        return self._age
+
+    def set_age(self, a):
+        print("setter method called")
+        self._age = a
+
+    def del_age(self):
+        del self._age
+
+    age = property(get_age, set_age, del_age)
+
+mark = Geeks()
+mark.age = 10
+print(mark.age)
+  </pre>
+
+  <strong>Output:</strong>
+  <pre style="background:#e8f4fd; padding:10px; border-radius:6px;">setter method called
+getter method called
+10</pre>
+
+  <p><strong>Explanation:</strong> The <code>property()</code> function binds the getter, setter, and deleter to the <code>age</code> property. This is a clean way to manage attribute access.</p>
+
+  <h3 style="color:#0b5394;">3. Using <code>@property</code> Decorators</h3>
+  <pre style="background:#f4f4f4; padding:12px; border-radius:6px;">
+class Geeks:
+    def __init__(self):
+        self._age = 0
+
+    @property
+    def age(self):
+        print("getter method called")
+        return self._age
+
+    @age.setter
+    def age(self, a):
+        if a < 18:
+            raise ValueError("Sorry, your age is below eligibility criteria")
+        print("setter method called")
+        self._age = a
+
+mark = Geeks()
+mark.age = 19
+print(mark.age)
+  </pre>
+
+  <strong>Output:</strong>
+  <pre style="background:#e8f4fd; padding:10px; border-radius:6px;">setter method called
+getter method called
+19</pre>
+
+  <p><strong>Explanation:</strong> This approach uses decorators to cleanly define getter and setter. It includes validation logic in the setter and looks more Pythonic.</p>
+
+  <h3 style="color:#0b5394;">Conclusion</h3>
+  <ul>
+    <li>Normal getter/setter methods are simple but verbose.</li>
+    <li><code>property()</code> function makes access cleaner and encapsulated.</li>
+    <li><code>@property</code> and <code>@.setter</code> decorators are the most Pythonic and elegant.</li>
+  </ul>
+</div>
+
+</div>
+
+   <script>
+  function showSection(sectionId, clickedElement) {
+    // Show only the clicked section
+    const sections = document.querySelectorAll('.main-section');
+    sections.forEach(sec => sec.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+
+    // Remove active class from all sidebar items
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
+    sidebarItems.forEach(item => item.classList.remove('active'));
+
+    // Add active class to the clicked one
+    clickedElement.classList.add('active');
+  }
+</script>
+
+
+  </main>
+</div>
+
+  <!-- Footer Start -->
+<footer id="footer" style="background-color: #181d38; width: 100%; margin-top: 5rem; color: #F0FBFC; font-family: 'Nunito', sans-serif; ">
+<div  style="background-color: #181d38; width: 100%;  margin-top: 5rem; color: #F0FBFC; font-family: 'Nunito', sans-serif; padding-top: 4rem; margin-top: 5rem;">
+  <div style="max-width: 1200px; margin: auto; padding: 3rem 1rem;">
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      
+      <!-- Quick Link -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Quick Link</h4>
+        <a href="/about" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>About Us
+        </a>
+        <a href="/contact" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Contact Us
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Privacy Policy
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>Terms & Conditions
+        </a>
+        <a href="#" style="display: block; margin-bottom: 5px; color: white; text-decoration: none; font-size: 15px;">
+          <i class="fas fa-angle-right" style="margin-right: 10px;"></i>FAQs & Help
+        </a>
+      </div>
+
+      <!-- Contact -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Contact</h4>
+        <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i>123 Street, New York, USA</p>
+        <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i>+012 345 67890</p>
+        <p><i class="fas fa-envelope" style="margin-right: 10px;"></i>info@example.com</p>
+        <div style="margin-top: 10px; display: flex; gap: 10px;">
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="#" style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; border: 1px solid white; color: white; text-decoration: none;">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Gallery</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+          <img src="/static/images/course-1.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-2.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-3.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-2.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-3.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+          <img src="/static/images/course-1.jpg" style="width: 30%; padding: 3px; background-color: #F0FBFC;" alt="">
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div style="flex: 1 1 250px;">
+        <h4 style="color: white; margin-bottom: 1rem;">Newsletter</h4>
+        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+        <div style="position: relative; max-width: 400px;">
+          <input type="text" placeholder="Your email"
+            style="width: 100%; padding: 15px 50px 15px 15px; border: none; border-radius: 5px;">
+          <button type="button"
+            style="position: absolute; top: 5px; right: 5px; padding: 10px 15px; background-color: #06BBCC; color: white; border: none; border-radius: 5px;">
+            SignUp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 25px 1rem; text-align: center; font-size: 15px;">
+    &copy; <a href="#" style="color: #F0FBFC; text-decoration: underline;">Your Site Name</a>, All Right Reserved.
+    <br>Designed By <a href="https://htmlcodex.com" style="color: #F0FBFC; text-decoration: underline;">HTML Codex</a>
+    <br>Distributed By <a href="https://themewagon.com" style="color: #F0FBFC; text-decoration: underline;">ThemeWagon</a>
+    <div style="margin-top: 10px;">
+      <a href="/" style="margin-right: 15px; color: #F0FBFC;">Home</a>
+      <a href="#" style="margin-right: 15px; color: #F0FBFC;">Cookies</a>
+      <a href="#" style="margin-right: 15px; color: #F0FBFC;">Help</a>
+      <a href="#" style="color: #F0FBFC;">FAQs</a>
+    </div>
+  </div>
+</div>
+</footer>
+<!-- Footer End -->
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const footer = document.getElementById('footer');
+
+  function checkSidebar() {
+    const sidebarBottom = sidebar.offsetTop + sidebar.offsetHeight;
+    const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+    const scrollY = window.scrollY + window.innerHeight;
+
+    if (scrollY >= footerTop) {
+      sidebar.style.position = 'absolute';
+      sidebar.style.top = (footerTop - sidebar.offsetHeight) + 'px';
+    } else {
+      sidebar.style.position = 'fixed';
+      sidebar.style.top = '80px';
+    }
+  }
+
+  window.addEventListener('scroll', checkSidebar);
+  window.addEventListener('resize', checkSidebar);
+  window.addEventListener('load', checkSidebar);
+</script>
+<script>
+  const sections = document.querySelectorAll('.main-section');
+  let currentIndex = 0;
+
+  function showSectionByIndex(index) {
+    sections.forEach((section, i) => {
+      section.style.display = i === index ? 'block' : 'none';
+    });
+
+    const navDiv = sections[index].querySelector('div[style*="justify-content:space-between"]');
+    if (navDiv) {
+      navDiv.innerHTML = ''; // Clear old buttons
+
+      if (index === 0) {
+        // First section
+        navDiv.innerHTML = `
+          <button onclick="goToHome()" style="${btnStyle}">&lt; Home</button>
+          <button onclick="goNext()" style="${btnStyle}">Next &gt;</button>
+        `;
+      } else if (index === sections.length - 1) {
+        // Last section
+        navDiv.innerHTML = `
+          <button onclick="goToHome()" style="${btnStyle}">&lt; Home</button>
+          <button onclick="goPrevious()" style="${btnStyle}">Previous &lt;</button>
+        `;
+      } else {
+        // Middle sections
+        navDiv.innerHTML = `
+          <button onclick="goPrevious()" style="${btnStyle}">Previous &lt;</button>
+          <button onclick="goNext()" style="${btnStyle}">Next &gt;</button>
+        `;
+      }
+    }
+  }
+
+  const btnStyle = "padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:6px; font-weight:bold;";
+
+  function goNext() {
+    if (currentIndex < sections.length - 1) {
+      currentIndex++;
+      showSectionByIndex(currentIndex);
+    }
+  }
+
+  function goPrevious() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showSectionByIndex(currentIndex);
+    }
+  }
+
+  function goToHome() {
+    currentIndex = 0;
+    showSectionByIndex(currentIndex);
+  }
+
+  // Initialize view
+  showSectionByIndex(0);
+</script>
+
+
+</body>
+</html>
